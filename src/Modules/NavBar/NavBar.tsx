@@ -1,5 +1,10 @@
+import { NavLink } from "Components"
+
 export const NavBar = () => {
   return (
-    <nav>This is the nav bar</nav>
+    <nav>
+      <NavLink to="/">Home</NavLink>
+      <NavLink to="journal">Journal</NavLink>
+    </nav>
   )
 }
