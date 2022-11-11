@@ -3,5 +3,5 @@ export const HomePage = () => {
     <section>
       This is a home page
     </section>
-  )
-}
+  );
+};

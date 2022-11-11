@@ -3,5 +3,5 @@ export const JournalItemPage = () => {
     <section>
       Journal Entry
     </section>
-  )
-}
+  );
+};

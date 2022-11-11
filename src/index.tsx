@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, Route,RouterProvider } from 'react-router-dom';
+
+import { ErrorPage, JournalItemPage, JournalPage, Root } from 'Routes';
+
 import './index.css';
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom';
-import { ErrorPage, JournalItemPage, JournalPage, Root } from 'Routes';
 
 const router = createBrowserRouter([
   { path: '/', element: <Root />, errorElement: <ErrorPage />, children: [

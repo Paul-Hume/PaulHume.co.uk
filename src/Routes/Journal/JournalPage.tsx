@@ -1,5 +1,6 @@
-import { Link } from "Components";
-import { useOutlet } from "react-router-dom";
+import { useOutlet } from 'react-router-dom';
+
+import { Link } from 'Components';
 
 export const JournalPage = () => {
   const outlet = useOutlet();

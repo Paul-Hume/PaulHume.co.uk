@@ -1,4 +1,4 @@
-import { Header } from "Modules"
+import { Header } from 'Modules';
 
 export const ErrorPage = () => {
   return (

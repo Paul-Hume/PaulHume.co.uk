@@ -1,2 +1,2 @@
-export * from './JournalPage';
 export * from './JournalItemPage';
+export * from './JournalPage';
