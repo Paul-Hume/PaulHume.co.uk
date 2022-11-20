@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, Route,RouterProvider } from 'react-router-dom';
+import { createBrowserRouter ,RouterProvider } from 'react-router-dom';
 
 import { ErrorPage, JournalItemPage, JournalPage, Root } from 'Routes';
 
@@ -12,7 +12,7 @@ import reportWebVitals from './reportWebVitals';
 const router = createBrowserRouter([
   { path: '/', element: <Root />, errorElement: <ErrorPage />, children: [
     { path: 'journal', element: <JournalPage />, children: [
-      { path: ':id', element: <JournalItemPage /> }
+      { path: ':journalId', element: <JournalItemPage /> }
     ] },
   ] },
 ]);

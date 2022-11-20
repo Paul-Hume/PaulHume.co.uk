@@ -29,9 +29,9 @@ module.exports = {
   root: true, // For configuration cascading.
   rules: {
     'react/react-in-jsx-scope': 'off',
-    semi: [2, 'always'],
-    quotes: ['error', 'single', { avoidEscape: true }],
-    indent: ['error', 2],
+    '@typescript-eslint/semi': [2, 'always'],
+    '@typescript-eslint/quotes': ['error', 'single', { avoidEscape: true }],
+    '@typescript-eslint/indent': ['error', 2],
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
     'import/first': 'error',
