@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Link } from 'Components';
 
 import { useFetchContentful } from 'Hooks';
-import { JournalEntry } from 'Types';
+import { JournalEntry, JournalEntryQuery } from 'Types';
 
 interface JournalResponse {
   journalEntryCollection: {
@@ -20,26 +20,7 @@ export const JournalPage = () => {
     {
       journalEntryCollection {
         items {
-          sys {
-            id
-          }
-          dateCreated
-          title
-          content {
-            json
-          }
-          project {
-            sys {
-              id
-            }
-          }
-          categoriesCollection {
-            items {
-              sys {
-                id
-              }
-            }
-          }
+          ${JournalEntryQuery}
         }
       }
     }

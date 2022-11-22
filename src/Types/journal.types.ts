@@ -11,4 +11,31 @@ export interface JournalEntry {
   project: {
     sys: Contentful.Sys;
   }
+  categoriesCollection: {
+    items: {
+      sys: Contentful.Sys;
+    }
+  }
 }
+
+export const JournalEntryQuery = `
+  sys {
+    id
+  }
+  title
+  content {
+    json
+  }
+  project {
+    sys {
+      id
+    }
+  }
+  categoriesCollection {
+    items {
+      sys {
+        id
+      }
+    }
+  }
+`;

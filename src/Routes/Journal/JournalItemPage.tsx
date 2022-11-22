@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
 import { useFetchContentful } from 'Hooks';
-import { JournalEntry } from 'Types';
+import { JournalEntry, JournalEntryQuery } from 'Types';
 
 interface JournalItemResponse {
   journalEntry: JournalEntry;
@@ -15,23 +15,7 @@ export const JournalItemPage = () => {
   const query = `
   {
     journalEntry(id: "${journalId}") {
-      sys {
-        id
-      }
-      dateCreated
-      title
-      project {
-        sys {
-          id
-        }
-      }
-      categoriesCollection {
-        items {
-          sys {
-            id
-          }
-        }
-      }
+      ${JournalEntryQuery}
     }
   }
   `;
