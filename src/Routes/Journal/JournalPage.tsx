@@ -18,7 +18,7 @@ export const JournalPage = () => {
 
   const query = `
     {
-      journalEntryCollection {
+      journalEntryCollection(order: sys_firstPublishedAt_DESC) {
         items {
           ${JournalEntryQuery}
         }

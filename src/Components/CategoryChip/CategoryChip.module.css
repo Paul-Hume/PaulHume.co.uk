@@ -1,0 +1,18 @@
+.chip {
+  width: 100%;
+  justify-content: flex-start;
+  margin-bottom: 1rem !important;
+}
+
+.chip>span {
+  width: 100%;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+}
+
+.label span {
+  display: inline-block;
+}

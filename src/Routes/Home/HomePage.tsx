@@ -1,7 +1,9 @@
+import { Card, CardContent, CardHeader } from '@mui/material';
+
 export const HomePage = () => {
   return (
     <section>
-      This is a home page
+      Home page
     </section>
   );
 };

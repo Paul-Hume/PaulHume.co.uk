@@ -1,6 +1,5 @@
-import { Link } from 'react-router-dom';
-
-import styles from './NavLink.module.css';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 interface NavLinkProps {
   to: string;
@@ -8,5 +7,12 @@ interface NavLinkProps {
 }
 
 export const NavLink = ({ to, children }: NavLinkProps) => {
-  return <Link className={styles.link} to={to}>{children}</Link>;
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const navigateTo = () => {
+    navigate(to);
+  };
+
+  return <Button color={pathname === to ? 'success' : 'info'} onClick={navigateTo}>{children}</Button>;
 };
