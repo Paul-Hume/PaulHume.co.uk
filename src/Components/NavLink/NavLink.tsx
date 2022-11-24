@@ -14,5 +14,5 @@ export const NavLink = ({ to, children }: NavLinkProps) => {
     navigate(to);
   };
 
-  return <Button color={pathname === to ? 'success' : 'info'} onClick={navigateTo}>{children}</Button>;
+  return <Button color={pathname === to ? 'secondary' : 'inherit'} onClick={navigateTo}>{children}</Button>;
 };

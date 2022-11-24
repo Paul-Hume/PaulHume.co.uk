@@ -42,7 +42,7 @@ export const SideBar = () => {
       <Typography className={styles.title} variant="h6">Filters</Typography>
 
       {sortedData?.map(category => (
-        <CategoryChip key={category.sys.id} category={category} onClick={() => console.log('clicked')} />
+        <CategoryChip key={category.sys.id} category={category} />
       ))}
     </aside>
   );
