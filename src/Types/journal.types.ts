@@ -3,39 +3,40 @@ import Contentful from 'contentful';
 
 export interface JournalEntry {
   sys: Contentful.Sys;
+  contentfulMetadata: Contentful.Metadata;
   title: string;
-  dateCreated: string;
+  slug: string;
   content: {
     json: Document;
   }
   project: {
     sys: Contentful.Sys;
-  }
-  categoriesCollection: {
-    items: {
-      sys: Contentful.Sys;
-    }
+    title: string;
   }
 }
 
 export const JournalEntryQuery = `
   sys {
     id
+    firstPublishedAt
+  }
+  contentfulMetadata {
+    tags {
+      id
+      name
+    }
   }
   title
+  slug
   content {
     json
   }
   project {
-    sys {
-      id
-    }
-  }
-  categoriesCollection {
-    items {
+    ... on Project {
       sys {
         id
       }
+      title
     }
   }
 `;

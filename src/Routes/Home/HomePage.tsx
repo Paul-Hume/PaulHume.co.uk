@@ -1,9 +1,9 @@
-import { Card, CardContent, CardHeader } from '@mui/material';
+import { PageHeader } from 'Components';
 
 export const HomePage = () => {
   return (
     <section>
-      Home page
+      <PageHeader title="Welcome" subTitle="Freelance Front End Developer" />
     </section>
   );
 };

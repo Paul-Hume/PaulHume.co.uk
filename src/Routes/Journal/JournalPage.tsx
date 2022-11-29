@@ -1,13 +1,15 @@
 import { useOutlet } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
-import { Link } from 'Components';
+import { Link, PageHeader } from 'Components';
 
+import { useTags } from 'Context/tagsContext';
 import { useFetchContentful } from 'Hooks';
 import { JournalEntry, JournalEntryQuery } from 'Types';
 
 interface JournalResponse {
   journalEntryCollection: {
+    total: number;
     items: JournalEntry[];
   }
 }
@@ -15,10 +17,14 @@ interface JournalResponse {
 export const JournalPage = () => {
   const outlet = useOutlet();
   const apiCall = useFetchContentful();
+  const { selectedTags } = useTags();
 
+  const filter = `where: {contentfulMetadata: { tags: { id_contains_some: [${selectedTags.map(tag => `"${tag}"`)}]} }} `;
+  console.log(filter);
   const query = `
     {
-      journalEntryCollection(order: sys_firstPublishedAt_DESC) {
+      journalEntryCollection(${selectedTags.length > 0 ? filter : ''}order: sys_firstPublishedAt_DESC) {
+        total
         items {
           ${JournalEntryQuery}
         }
@@ -31,31 +37,20 @@ export const JournalPage = () => {
     return response;
   };
 
-  const { isLoading, data, error } = useQuery({ queryKey: ['journals'], queryFn: fetchJournal, staleTime: Infinity, select: (data: JournalResponse) => {
-    return data?.journalEntryCollection?.items || [];
+  const { isLoading, data, error } = useQuery({ queryKey: ['journals', selectedTags], queryFn: fetchJournal, staleTime: Infinity, select: (data: JournalResponse) => {
+    return data?.journalEntryCollection || {};
   }});
-
-  if (isLoading) {
-    return (
-      <div>Loading...</div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div>Error</div>
-    );
-  }
   
   return outlet || (
     <section>
-      <h1>Journal</h1>
+      <PageHeader title="Journal" subTitle={isLoading ? 'Loading ....' : `${data?.total} ${data && data?.total > 1 ? 'items' : 'item'}`}/>    
+
+      {!!error && <p>Error loading journal</p>}
       
-      {data?.map((journalItem: JournalEntry) => (
+      {!error && data?.items?.map((journalItem: JournalEntry) => (
         <div key={journalItem.sys.id}>
           <h3>{journalItem.title}</h3>
-  
-          <Link to={`${journalItem.sys.id}`}>View</Link>
+          <Link to={`${journalItem.slug}`}>View</Link>
         </div>
       ))}
     </section>

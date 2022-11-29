@@ -1,12 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
-import { useFetchContentful } from 'Hooks';
-import { JournalEntry, JournalEntryQuery } from 'Types';
+import { PageHeader } from 'Components';
 
-interface JournalItemResponse {
-  journalEntry: JournalEntry;
-}
+import { useFetchContentful } from 'Hooks';
+import { JournalEntryQuery } from 'Types';
 
 export const JournalItemPage = () => {
   const { journalId } = useParams();
@@ -14,36 +12,24 @@ export const JournalItemPage = () => {
 
   const query = `
   {
-    journalEntry(id: "${journalId}") {
-      ${JournalEntryQuery}
+    journalEntryCollection(where: { slug: "${journalId}" }) {
+      items {
+        ${JournalEntryQuery}
+      }
     }
   }
   `;
 
   const fetchJournalItem = async () => {
     const response = await apiCall({ query});
-    return response;
+    return response.journalEntryCollection.items[0];
   };
 
-  const { isLoading, data, error } = useQuery({ queryKey: ['journalItem', journalId], queryFn: fetchJournalItem, staleTime: Infinity, select: (data: JournalItemResponse) => {
-    return data?.journalEntry;
-  }});
-
-  if (isLoading) {
-    return (
-      <div>Loading...</div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div>Error</div>
-    );
-  }
+  const { isLoading, data, error } = useQuery({ queryKey: ['journalItem', journalId], queryFn: fetchJournalItem, staleTime: Infinity });
 
   return (
     <section>
-      <h3>{data?.title}</h3>
+      <PageHeader title={data?.title} />
     </section>
   );
 };

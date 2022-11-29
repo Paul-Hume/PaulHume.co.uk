@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  border-bottom: 1px solid gray;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: .5rem 0;
+}
+
+.container h3 {
+  margin-left: auto;
+}

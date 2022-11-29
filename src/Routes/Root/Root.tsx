@@ -7,8 +7,7 @@ import { HomePage } from 'Routes/Home';
 
 import styles from './Root.module.css';
 
-import { CategoriesProvider } from 'Context/categoriesContext';
-
+import { TagsProvider } from 'Context/tagsContext';
 
 const queryClient = new QueryClient();
 
@@ -17,7 +16,7 @@ export const Root = () => {
     
   return (
     <QueryClientProvider client={queryClient}>
-      <CategoriesProvider>
+      <TagsProvider>
         <Paper className={styles.container} elevation={0}>
           <Header />     
           <section className={styles.content}>
@@ -29,7 +28,7 @@ export const Root = () => {
             </section>
           </section>
         </Paper>
-      </CategoriesProvider>
+      </TagsProvider>
     </QueryClientProvider>
   );
 };
