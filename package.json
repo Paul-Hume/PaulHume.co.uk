@@ -21,6 +21,7 @@
     "@types/react-dom": "^18.0.8",
     "contentful": "^9.2.11",
     "contentful-ts-type-generator": "github:arimkevi/contentful-ts-type-generator",
+    "date-fns": "^2.29.3",
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "match-sorter": "^6.3.1",

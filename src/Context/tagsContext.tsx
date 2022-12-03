@@ -1,8 +1,10 @@
 import { createContext, useCallback,useContext, useEffect, useMemo, useState } from 'react';
-import Contentful, {createClient} from 'contentful';
+import { createClient } from 'contentful';
+
+import { Tag } from 'Types/tag.types';
 
 export interface TagsContext {
-  tags: Contentful.Tag[];
+  tags: Tag[];
   selectedTags: string[];
   updateSelectedTags: (category: string) => void;
 }
@@ -14,7 +16,7 @@ const Tags = createContext<TagsContext>({
 });
 
 const TagsProvider = (props: object) => {
-  const [tags, setTags] = useState<Contentful.Tag[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const contentfulClient = createClient({
@@ -23,9 +25,11 @@ const TagsProvider = (props: object) => {
   });
 
   useEffect(() => {
-    contentfulClient.getTags().then(response => {
-      setTags(response.items);
+    contentfulClient.getTags().then((response) => {    
+      setTags(response.items.map((tag) => ({ id: tag.sys.id, name: tag.name })));
     });
+  // * Need this disabled because contentfulClient is not memoized
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 

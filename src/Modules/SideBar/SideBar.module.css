@@ -1,10 +1,20 @@
 .container {
-  width: 20vw;
-  max-width: 15rem;
-  padding: 1rem;
+  padding: var(--gap);
+  padding-right: 0;
 }
 
 .title {
   text-align: center;
   margin-bottom: 1rem !important;
+}
+
+.tags {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tag {
+  display: flex !important;
+  justify-content: flex-start !important;
 }

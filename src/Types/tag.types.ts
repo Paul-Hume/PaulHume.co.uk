@@ -1,6 +1,4 @@
-import Contentful from 'contentful';
-
 export interface Tag {
+  id?: string;
   name: string;
-  sys: Contentful.Sys;
 }

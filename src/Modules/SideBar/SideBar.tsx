@@ -9,13 +9,17 @@ import { useTags } from 'Context/tagsContext';
 export const SideBar = () => {
   const { tags } = useTags();
 
+  const sortedTags = tags.sort((a, b) => a.name.localeCompare(b.name));
+
   return (
     <aside className={styles.container}>
       <Typography className={styles.title} variant="h6">Tags</Typography>
 
-      {tags.map((tag) => (
-        <TagChip key={tag.sys.id} tag={tag} />
-      ))}
+      <section className={styles.tags}>
+        {sortedTags.map((tag) => (
+          <TagChip className={styles.tag} size="medium" key={tag.id} tag={tag} />
+        ))}
+      </section>
     </aside>
   );
 };

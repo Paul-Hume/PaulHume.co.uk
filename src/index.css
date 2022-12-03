@@ -20,3 +20,19 @@ code {
 #root {
   min-height: 100vh;
 }
+
+:root {
+  --gap: 16px;
+}
+
+@media screen and (min-width: 600px) {
+  :root {
+    --gap: 24px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  :root {
+    --gap: 24px;
+  }
+}

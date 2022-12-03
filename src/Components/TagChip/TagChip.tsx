@@ -1,24 +1,35 @@
 import { Chip } from '@mui/material';
-import Contentful from 'contentful';
-
-import styles from './TagChip.module.css';
 
 import { useTags } from 'Context/tagsContext';
+import { Tag } from 'Types/tag.types';
 
 interface TagChipProps {
-  tag: Contentful.Tag;
+  tag: Tag,
+  size?: 'small' | 'medium',
+  className?: string,
+  color?: 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning' | 'default',
 }
 
-export const TagChip = ({ tag }: TagChipProps) => {
+export const TagChip = ({ tag, size, className, color }: TagChipProps) => {
   const { selectedTags, updateSelectedTags } = useTags();
 
   return (
     <Chip
-      className={styles.chip}
-      label={<div className={styles.label}><span>{tag.name}</span></div>}
-      variant={selectedTags.includes(tag.sys.id) ? undefined : 'outlined'}
-      color="primary"
-      onClick={() => updateSelectedTags(tag.sys.id)}
+      className={className}
+      size={size}
+      label={tag.name}
+      variant={selectedTags.includes(tag?.id || tag.id || '') ? undefined : 'outlined'}
+      color={color}
+      onClick={(event) => {
+        event.stopPropagation();
+        updateSelectedTags(tag?.id || '');
+      }}
     />
   );
+};
+
+TagChip.defaultProps = {
+  size: 'small',
+  className: '',
+  color: 'primary',
 };

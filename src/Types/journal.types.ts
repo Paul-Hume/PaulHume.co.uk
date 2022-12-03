@@ -1,9 +1,16 @@
 import { Document } from '@contentful/rich-text-types';
 import Contentful from 'contentful';
 
+import { Tag } from './tag.types';
+
 export interface JournalEntry {
-  sys: Contentful.Sys;
-  contentfulMetadata: Contentful.Metadata;
+  sys: {
+    id: string;
+    firstPublishedAt: string;
+  };
+  contentfulMetadata: {
+    tags: Tag[];
+  };
   title: string;
   slug: string;
   content: {
