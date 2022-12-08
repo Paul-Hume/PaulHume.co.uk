@@ -12,6 +12,8 @@ interface TagBlockProps {
 }
 
 export const TagBlock = ({ tags, color, align, size }: TagBlockProps) => {
+  if (tags.length === 0) return null;
+
   return (
     <section className={`${styles.container} ${styles[`align-${align}`]}`}>
       {tags.map((tag: Tag) => (<TagChip className={styles.chip} key={tag.id} tag={tag} color={color} size={size} />))}

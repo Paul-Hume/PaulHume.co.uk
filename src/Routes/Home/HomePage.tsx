@@ -1,9 +1,9 @@
-import { PageHeader } from 'Components';
+import { Title } from 'Components';
 
 export const HomePage = () => {
   return (
     <section>
-      <PageHeader title="Welcome" subTitle="Freelance Front End Developer" />
+      <Title title="Welcome" subTitle="Freelance Front End Developer" />
     </section>
   );
 };

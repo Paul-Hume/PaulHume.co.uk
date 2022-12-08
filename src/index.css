@@ -40,17 +40,14 @@ code {
 pre {
   font-size: .8rem;
   position: relative;
-  background-color: #111;
+  background-color: #222;
   overflow: hidden;
   padding: 1em;
-  padding-top: 3em;
   border-radius: .5em;
-  width: 95%;
   margin: 2em auto;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, .5);
 }
 
-pre::before {
+/* pre::before {
   content: 'Code example';
   position: absolute;
   display: flex;
@@ -62,4 +59,4 @@ pre::before {
   left: 0;
   width: 100%;
   background-color: #555;
-}
+} */

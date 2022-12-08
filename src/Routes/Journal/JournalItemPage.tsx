@@ -1,7 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
-import { PageHeader, RenderRichText, TagBlock } from 'Components';
+import { RenderRichText, TagBlock,Title } from 'Components';
+import { JournalGrid } from 'Modules';
 
 import styles from './JournalItemPage.module.css';
 
@@ -12,9 +13,6 @@ import { formatDate } from 'Utils';
 export const JournalItemPage = () => {
   const { journalId } = useParams();
   const apiCall = useFetchContentful();
-  
-  const foo = 'blar';
-  console.log(foo);
 
   const query = `
   {
@@ -37,11 +35,15 @@ export const JournalItemPage = () => {
 
   return (
     <section>
-      <PageHeader title={data?.title || ''} subTitle={formatDate(data?.sys?.firstPublishedAt || '')} />
+      <Title title={data?.title || ''} subTitle={formatDate(data?.sys?.firstPublishedAt || '')} />
       
+      <TagBlock align="right" size="medium" tags={data?.contentfulMetadata?.tags} />
+
       { data?.content && <RenderRichText className={styles.container} content={data?.content} />}
 
-      { data?.contentfulMetadata?.tags?.length && <TagBlock align="right" size="medium" tags={data?.contentfulMetadata?.tags} /> }
+      <Title title="Latest Entries" type="h4" />
+
+      <JournalGrid limit={2} journalId={data?.sys?.id} />
     </section>
   );
 };
