@@ -36,3 +36,30 @@ code {
     --gap: 24px;
   }
 }
+
+pre {
+  font-size: .8rem;
+  position: relative;
+  background-color: #111;
+  overflow: hidden;
+  padding: 1em;
+  padding-top: 3em;
+  border-radius: .5em;
+  width: 95%;
+  margin: 2em auto;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, .5);
+}
+
+pre::before {
+  content: 'Code example';
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 2em;
+  padding: 0 1em;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #555;
+}

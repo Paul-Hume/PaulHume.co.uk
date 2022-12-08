@@ -3,3 +3,15 @@
   gap: .5rem;
   flex-wrap: wrap;
 }
+
+.container.align-left {
+  justify-content: flex-start;
+}
+
+.container.align-center {
+  justify-content: center;
+}
+
+.container.align-right {
+  justify-content: flex-end;
+}

@@ -7,12 +7,14 @@ import { Tag } from 'Types/tag.types';
 interface TagBlockProps {
   tags: Tag[];
   color?: 'primary' | 'secondary' | 'success' | 'error' | 'warning' | 'info' | 'default';
+  align?: 'left' | 'center' | 'right';
+  size?: 'small' | 'medium';
 }
 
-export const TagBlock = ({ tags, color }: TagBlockProps) => {
+export const TagBlock = ({ tags, color, align, size }: TagBlockProps) => {
   return (
-    <section className={styles.container}>
-      {tags.map((tag: Tag) => (<TagChip className={styles.chip} key={tag.id} tag={tag} color={color} />))}
+    <section className={`${styles.container} ${styles[`align-${align}`]}`}>
+      {tags.map((tag: Tag) => (<TagChip className={styles.chip} key={tag.id} tag={tag} color={color} size={size} />))}
     </section>
   );
 };
@@ -20,4 +22,6 @@ export const TagBlock = ({ tags, color }: TagBlockProps) => {
 TagBlock.defaultProps = {
   tags: [],
   color: 'secondary',
+  align: 'left',
+  size: 'small',
 };

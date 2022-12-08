@@ -1,14 +1,20 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
-import { PageHeader } from 'Components';
+import { PageHeader, RenderRichText, TagBlock } from 'Components';
+
+import styles from './JournalItemPage.module.css';
 
 import { useFetchContentful } from 'Hooks';
-import { JournalEntryQuery } from 'Types';
+import { JournalEntry, JournalEntryQuery } from 'Types';
+import { formatDate } from 'Utils';
 
 export const JournalItemPage = () => {
   const { journalId } = useParams();
   const apiCall = useFetchContentful();
+  
+  const foo = 'blar';
+  console.log(foo);
 
   const query = `
   {
@@ -25,11 +31,17 @@ export const JournalItemPage = () => {
     return response.journalEntryCollection.items[0];
   };
 
-  const { isLoading, data, error } = useQuery({ queryKey: ['journalItem', journalId], queryFn: fetchJournalItem, staleTime: Infinity });
+  const { data } = useQuery({ queryKey: ['journalItem', journalId], queryFn: fetchJournalItem, staleTime: Infinity, select: (data: JournalEntry) => {
+    return data || {};
+  }});
 
   return (
     <section>
-      <PageHeader title={data?.title} />
+      <PageHeader title={data?.title || ''} subTitle={formatDate(data?.sys?.firstPublishedAt || '')} />
+      
+      { data?.content && <RenderRichText className={styles.container} content={data?.content} />}
+
+      { data?.contentfulMetadata?.tags?.length && <TagBlock align="right" size="medium" tags={data?.contentfulMetadata?.tags} /> }
     </section>
   );
 };
