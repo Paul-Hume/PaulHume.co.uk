@@ -3,25 +3,30 @@ import { Theme } from '@mui/material';
 
 import { draculaTheme } from 'Themes/dracular';
 import { lightOrangeTheme } from 'Themes/lightOrange';
-
-type ThemeOptions = 'light' | 'dark';
+import { getCookie, setCookie } from 'Utils';
 
 export interface UiContext {
-  theme: ThemeOptions;
+  theme: string;
   currentTheme: Theme;
   toggleTheme: () => void;
 }
 
 const Ui = createContext<UiContext>({
-  theme: 'dark',
+  theme: getCookie('theme') || 'dark',
   currentTheme: draculaTheme,
   toggleTheme: () => {},
 });
 
 const UiProvider = (props: object) => {
-  const [theme, setTheme] = useState<ThemeOptions>('dark');
+  const [theme, setTheme] = useState<string>(getCookie('theme') || 'dark');
 
-  const toggleTheme = () => setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  const toggleTheme = () => {
+    setTheme((prev) => {
+      const next = prev === 'dark' ? 'light' : 'dark';
+      setCookie('theme', next);
+      return next;
+    });
+  };
 
   const currentTheme: Theme = useMemo(() => theme === 'dark' ? draculaTheme : lightOrangeTheme, [theme]);
 
