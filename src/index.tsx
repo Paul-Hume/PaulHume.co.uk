@@ -1,15 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter ,RouterProvider } from 'react-router-dom';
-import { CssBaseline } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
 
 import { ErrorPage, JournalItemPage, JournalPage, Root } from 'Routes';
 
 import './index.css';
 
 import reportWebVitals from './reportWebVitals';
-import { draculaTheme } from 'Themes/dracular';
+import { UiProvider } from 'Context/uiContext';
 
 const router = createBrowserRouter([
   { path: '/', element: <Root />, errorElement: <ErrorPage />, children: [
@@ -25,10 +23,9 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={draculaTheme}>
-      <CssBaseline enableColorScheme />
+    <UiProvider>
       <RouterProvider router={router} />
-    </ThemeProvider>
+    </UiProvider>
   </React.StrictMode>
 );
 

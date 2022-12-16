@@ -4,4 +4,5 @@ export * from './NavLink';
 export * from './RenderRichText';
 export * from './TagBlock';
 export * from './TagChip';
+export * from './ThemeToggleSwitch';
 export * from './Title';
