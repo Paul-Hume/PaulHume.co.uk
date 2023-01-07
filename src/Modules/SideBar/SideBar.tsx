@@ -9,7 +9,7 @@ import { useTags } from 'Context/tagsContext';
 export const SideBar = () => {
   const { tags } = useTags();
 
-  const sortedTags = tags.sort((a, b) => a.name.localeCompare(b.name));
+  const sortedTags = tags.sort((a, b) => a.name.localeCompare(b.name)).filter(tag => !tag.name.toLowerCase().includes('page'));
 
   return (
     <aside className={styles.container}>

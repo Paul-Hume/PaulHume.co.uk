@@ -19,6 +19,7 @@
     "@types/node": "^16.18.3",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
+    "axios": "^1.2.2",
     "contentful": "^9.2.11",
     "contentful-ts-type-generator": "github:arimkevi/contentful-ts-type-generator",
     "date-fns": "^2.29.3",

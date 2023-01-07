@@ -1,0 +1,7 @@
+.container {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%); 
+}
