@@ -7,7 +7,8 @@ import { JournalGrid } from 'Modules';
 import styles from './JournalItemPage.module.css';
 
 import { useFetchContentful } from 'Hooks';
-import { JournalEntry, JournalEntryQuery } from 'Types';
+import { JournalEntryFullQuery } from 'Queries/journal.query';
+import { JournalEntryFull } from 'Types';
 import { formatDate } from 'Utils';
 
 export const JournalItemPage = () => {
@@ -16,9 +17,9 @@ export const JournalItemPage = () => {
 
   const query = `
   {
-    journalEntryCollection(where: { slug: "${journalId}" }) {
+    journalEntryCollection(limit: 1, where: { slug: "${journalId}" }) {
       items {
-        ${JournalEntryQuery}
+        ${JournalEntryFullQuery}
       }
     }
   }
@@ -29,7 +30,7 @@ export const JournalItemPage = () => {
     return response.journalEntryCollection.items[0];
   };
 
-  const { data } = useQuery({ queryKey: ['journalItem', journalId], queryFn: fetchJournalItem, staleTime: Infinity, select: (data: JournalEntry) => {
+  const { data } = useQuery({ queryKey: ['journalItem', journalId], queryFn: fetchJournalItem, staleTime: Infinity, select: (data: JournalEntryFull) => {
     return data || {};
   }});
 

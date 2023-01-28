@@ -1,4 +1,4 @@
-import { Document } from '@contentful/rich-text-types';
+import { ItemContent } from './util.types';
 
 export interface PageSection {
   sys: {
@@ -7,7 +7,5 @@ export interface PageSection {
   showTitle: boolean;
   title: string;
   subTitle?: string;
-  content: {
-    json: Document;
-  }
+  content: ItemContent;
 }

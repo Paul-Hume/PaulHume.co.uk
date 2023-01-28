@@ -1,49 +1,21 @@
-import { Document } from '@contentful/rich-text-types';
 import Contentful from 'contentful';
 
 import { Tag } from './tag.types';
+import { ItemContent, ItemSys } from './util.types';
 
-export interface JournalEntry {
-  sys: {
-    id: string;
-    firstPublishedAt: string;
-  };
+export interface JournalEntryPartial {
+  sys: ItemSys;
   contentfulMetadata: {
     tags: Tag[];
   };
   title: string;
   slug: string;
-  content: {
-    json: Document;
-  }
+}
+
+export interface JournalEntryFull extends JournalEntryPartial {
+  content: ItemContent;
   project: {
     sys: Contentful.Sys;
     title: string;
   }
 }
-
-export const JournalEntryQuery = `
-  sys {
-    id
-    firstPublishedAt
-  }
-  contentfulMetadata {
-    tags {
-      id
-      name
-    }
-  }
-  title
-  slug
-  content {
-    json
-  }
-  project {
-    ... on Project {
-      sys {
-        id
-      }
-      title
-    }
-  }
-`;

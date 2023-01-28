@@ -6,6 +6,7 @@ import { LoadingSpinner, PageContentItem } from 'Components';
 import styles from './PageContent.module.css';
 
 import { useFetchContentful } from 'Hooks';
+import { PageQuery } from 'Queries/page.query';
 import { PageSection } from 'Types/page.types';
 
 interface PageContentResponse {
@@ -30,15 +31,7 @@ export const PageContent = ({ page }: PageContentProps) => {
       ) {
         total
         items {
-          sys {
-            id
-          }
-          showTitle
-          title
-          subTitle
-          content {
-            json
-          }
+          ${PageQuery}
         }
       }
     }
@@ -53,7 +46,6 @@ export const PageContent = ({ page }: PageContentProps) => {
     queryFn: fetchPageContent,
     staleTime: Infinity,
     select: (data: PageContentResponse) => {
-      console.log(data.pageSectionsCollection);
       return data?.pageSectionsCollection?.items || [];
     }
   });

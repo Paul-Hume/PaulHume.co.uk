@@ -6,13 +6,14 @@ import { Grid, TagBlock } from 'Components';
 
 import { useTags } from 'Context/tagsContext';
 import { useFetchContentful } from 'Hooks';
-import { JournalEntry, JournalEntryQuery } from 'Types';
+import { JournalEntryPartialQuery } from 'Queries/journal.query';
+import { JournalEntryPartial } from 'Types';
 import { formatDate } from 'Utils';
 
 interface JournalResponse {
   journalEntryCollection: {
     total: number;
-    items: JournalEntry[];
+    items: JournalEntryPartial[];
   }
 }
 
@@ -43,7 +44,7 @@ export const JournalGrid = ({ limit, journalId }: JournalGridProps) => {
       journalEntryCollection(limit: ${limit} ${filter} order: sys_firstPublishedAt_DESC) {
         total
         items {
-          ${JournalEntryQuery}
+          ${JournalEntryPartialQuery}
         }
       }
     }
@@ -73,7 +74,7 @@ export const JournalGrid = ({ limit, journalId }: JournalGridProps) => {
 
   return (
     <Grid>
-      {!error && data?.items?.map((journalItem: JournalEntry) => (
+      {!error && data?.items?.map((journalItem: JournalEntryPartial) => (
         <Card key={journalItem.sys.id}>
           <CardActionArea onClick={() => navigateJournalItem(journalItem.slug)} sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
             <CardHeader title={journalItem.title} subheader={formatDate(journalItem.sys.firstPublishedAt)} />
