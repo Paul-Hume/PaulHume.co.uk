@@ -1,15 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { createBrowserRouter ,RouterProvider } from 'react-router-dom';
+
+import { ErrorPage, JournalItemPage, JournalPage, Root } from 'Routes';
+
 import './index.css';
-import App from './App';
+
 import reportWebVitals from './reportWebVitals';
+import { UiProvider } from 'Context/uiContext';
+
+const router = createBrowserRouter([
+  { path: '/', element: <Root />, errorElement: <ErrorPage />, children: [
+    { path: 'journal', element: <JournalPage />, children: [
+      { path: ':journalId', element: <JournalItemPage /> }
+    ] },
+  ] },
+]);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
-    <App />
+    <UiProvider>
+      <RouterProvider router={router} />
+    </UiProvider>
   </React.StrictMode>
 );
 

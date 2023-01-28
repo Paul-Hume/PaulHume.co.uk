@@ -1,0 +1,3 @@
+.loading-spinner, .error-message {
+  margin-top: var(--gap);
+}

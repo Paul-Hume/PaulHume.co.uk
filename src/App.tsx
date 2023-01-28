@@ -1,12 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
+
+import { HomePage } from 'Routes';
+
 import './App.css';
+
+import logo from './logo.svg';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <HomePage />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>

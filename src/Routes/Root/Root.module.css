@@ -1,0 +1,12 @@
+.container {
+  border-radius: 0;
+  min-height: 100vh;
+}
+
+.content {
+  display: flex;
+}
+
+.page-content {
+  flex: 1;
+}
