@@ -18,8 +18,8 @@ export const NavBar = () => {
           <ThemeToggleSwitch checked={theme === 'dark'} onChange={toggleTheme} theme={currentTheme} />
           <NavLink to="/">Home</NavLink>
           <NavLink to="/journal">Journal</NavLink>
-          <NavLink to="/projects">Projects</NavLink>
-          <NavLink to="/history">History</NavLink>
+          {/* <NavLink to="/projects">Projects</NavLink>
+          <NavLink to="/history">History</NavLink> */}
           <Typography variant="h6" component="div" sx={{ flex: 1, textAlign: 'right' }}>
               Paul Hume
           </Typography>
