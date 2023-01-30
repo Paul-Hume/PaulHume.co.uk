@@ -61,7 +61,7 @@ export const PageContent = ({ page }: PageContentProps) => {
   return (
     <section>
       {data?.map((section, index) => {
-        return <PageContentItem key={section.sys.id} content={section} titleType={index > 0 ? 'h4' : undefined} />;
+        return <PageContentItem key={section.title} content={section} titleType={index > 0 ? 'h4' : undefined} />;
       })}
     </section>
   );

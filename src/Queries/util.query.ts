@@ -28,3 +28,9 @@ export const ContentQuery = `
     }
   }
 `;
+
+export const ContentQueryNoAssets = `
+  content {
+    json
+  }
+`;
