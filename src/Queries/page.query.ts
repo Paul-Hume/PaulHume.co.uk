@@ -1,8 +1,8 @@
-import { ContentQuery } from './util.query';
+import { ContentQueryNoAssets } from './util.query';
 
 export const PageQuery = `
   showTitle
   title
   subTitle
-  ${ContentQuery}
+  ${ContentQueryNoAssets}
 `;
