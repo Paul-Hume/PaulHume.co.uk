@@ -29,6 +29,7 @@
 
 .page-content {
   overflow-y: auto;
+  overflow-x: hidden;
   margin-right: var(--gap);
   margin-left: var(--gap);
 }
