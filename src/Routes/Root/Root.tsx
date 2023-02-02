@@ -10,28 +10,41 @@ import styles from './Root.module.css';
 
 import { TagsProvider } from 'Context/tagsContext';
 import { useUi } from 'Context/uiContext';
+import { useMedia } from 'Hooks';
 
 const queryClient = new QueryClient();
 
 export const Root = () => {
   const outlet = useOutlet();
   const { currentTheme } = useUi();
+  const smallScreen = useMedia('sm', 'down');
     
   return (
     <ThemeProvider theme={currentTheme}>
       <CssBaseline enableColorScheme />
       <QueryClientProvider client={queryClient}>
         <TagsProvider>
-          <Paper className={styles.container} elevation={0}>
-            <Header />     
-            <section className={styles.content}>
-              <SideBar />
-              <section className={styles['page-content']}>
-                <Container>
+          <Paper className={`${styles.container} ${smallScreen ? '' : styles.largeScreen}`} elevation={0}>
+            <header className={styles.header}>
+              <Header />
+            </header>
+            <section className={`${styles.content} ${smallScreen ? '' : styles.largeScreen}`}>
+              {!smallScreen && (
+                <aside className={styles.aside}>
+                  <SideBar />
+                </aside>
+              )}
+              <article className={`${styles['page-content']} ${smallScreen ? '' : styles.largeScreen}`}>
+                <Container className={styles['page-container']}>
                   {outlet || <HomePage />}
                 </Container>
-              </section>
+              </article>
             </section>
+            {smallScreen && (
+              <footer className={styles.footer}>
+                This is the footer
+              </footer>
+            )}
           </Paper>
         </TagsProvider>
       </QueryClientProvider>

@@ -10,16 +10,16 @@ export const SideBar = () => {
   const { loadingTags, tags } = useTags();
 
   return (
-    <aside className={styles.container}>
+    <section className={styles.container}>
       <Typography className={styles.title} variant="h6">Tags</Typography>
 
-      <section className={styles.tags}>
+      <section className={styles['tags-container']}>
         {loadingTags && <LoadingSpinner />}
 
         {!loadingTags && tags.map((tag) => (
           <TagChip className={styles.tag} size="medium" key={tag.id} tag={tag} />
         ))}
       </section>
-    </aside>
+    </section>
   );
 };
