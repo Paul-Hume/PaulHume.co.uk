@@ -1,0 +1,5 @@
+.container {
+  padding: var(--gap);
+  max-height: 100vh;
+  max-height: 100dvh;
+}

@@ -11,7 +11,7 @@ export const SideBar = () => {
 
   return (
     <section className={styles.container}>
-      <Typography className={styles.title} variant="h6">Tags</Typography>
+      <Typography className={styles.title} variant="h6">Filters</Typography>
 
       <section className={styles['tags-container']}>
         {loadingTags && <LoadingSpinner />}

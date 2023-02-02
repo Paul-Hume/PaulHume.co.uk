@@ -3,7 +3,7 @@ import { Container, CssBaseline,Paper  } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { Header, SideBar } from 'Modules';
+import { Footer, Header, SideBar } from 'Modules';
 import { HomePage } from 'Routes/Home';
 
 import styles from './Root.module.css';
@@ -42,7 +42,7 @@ export const Root = () => {
             </section>
             {smallScreen && (
               <footer className={styles.footer}>
-                This is the footer
+                <Footer />
               </footer>
             )}
           </Paper>
