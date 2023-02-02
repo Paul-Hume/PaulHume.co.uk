@@ -1,5 +1,7 @@
 import { Chip } from '@mui/material';
 
+import styles from './TagChip.module.css';
+
 import { useTags } from 'Context/tagsContext';
 import { Tag } from 'Types/tag.types';
 
@@ -15,9 +17,14 @@ export const TagChip = ({ tag, size, className, color }: TagChipProps) => {
 
   return (
     <Chip
-      className={className}
+      className={`${styles.tag} ${className}`}
       size={size}
-      label={tag.name}
+      label={(
+        <div className={styles.container}>
+          <span>{tag.name}</span>
+          <span className={tag.count ? styles['tag-count'] : ''}>{tag.count}</span>
+        </div>
+      )}
       variant={selectedTags.includes(tag?.id || tag.id || '') ? undefined : 'outlined'}
       color={color}
       onClick={(event) => {

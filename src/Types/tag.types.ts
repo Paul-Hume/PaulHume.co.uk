@@ -1,5 +1,9 @@
 export interface Tag {
   id?: string;
   name: string;
-  sortOrder: number;
+  count: number;
+}
+
+export interface MetaData {
+  tags: Tag[];
 }
