@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Description,FilterAlt, Home } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import { Avatar, IconButton,Switch  } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,6 +11,7 @@ import { TagDrawer } from 'Modules/TagDrawer';
 
 import styles from './NavBar.module.css';
 
+import { useUi } from 'Context/uiContext';
 import { useMedia } from 'Hooks';
 
 interface NavBarProps {
@@ -18,14 +19,13 @@ interface NavBarProps {
 }
 
 export const NavBar = ({ location = 'header' }: NavBarProps) => {
-  
+  const { profileImage } = useUi();
   const largeScreen = useMedia('md');
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (open: boolean) => {
     setOpen(open);
   };
-
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -52,8 +52,9 @@ export const NavBar = ({ location = 'header' }: NavBarProps) => {
             </>
           )}
 
+          {profileImage && location === 'header' && <Avatar sx={{ marginLeft: 'auto'}} src={profileImage} alt="Paul Hume" />}
           {location === 'header' && (
-            <Typography variant="h6" component="div" sx={{ flex: 1, textAlign: 'right' }}>
+            <Typography variant="h6" component="div" sx={{ textAlign: 'right', whiteSpace: 'nowrap', marginLeft: '1rem' }}>
             Paul Hume
             </Typography>
           )}
