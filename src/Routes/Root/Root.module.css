@@ -1,12 +1,46 @@
 .container {
   border-radius: 0;
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: auto minMax(0, 1fr) auto;
+  gap: var(--gap);
+}
+
+.container.largeScreen {
+  grid-template-rows: auto minMax(0, 1fr);
+}
+
+.aside {
+  height: 100%;
+  overflow: auto;
+  margin-left: var(--gap);
 }
 
 .content {
-  display: flex;
+  display: grid;
+  grid-template-columns: minMax(0, 1fr);
+  gap: var(--gap);
+}
+
+.content.largeScreen {
+  grid-template-columns: auto minMax(0, 1fr);
 }
 
 .page-content {
-  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-right: var(--gap);
+  margin-left: var(--gap);
+}
+
+.page-content.largeScreen {
+  margin-left: 0;
+}
+
+.page-container {
+  padding: 0 !important;
+}
+
+.footer {
 }
