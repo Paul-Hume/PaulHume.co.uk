@@ -1,6 +1,5 @@
 import { createContext, useCallback,useContext, useEffect, useMemo, useState } from 'react';
 import { createClient } from 'contentful';
-import { sortBy } from 'lodash';
 
 import { useFetchContentful } from 'Hooks';
 import { Tag } from 'Types/tag.types';
@@ -40,13 +39,6 @@ const TagsProvider = (props: object) => {
     accessToken: `${process.env.REACT_APP_READ_ONLY_TOKEN}`,
   });
 
-  const priorityTags = [
-    { name: 'React', sortOrder: 1 },
-    { name: 'React Context', sortOrder: 2 },
-    { name: 'ReactQuery', sortOrder: 3 },
-  ];
-
-
   const getTagCounts = async () => {
     const response: EntitiesResponse = await apiCall({
       query: `
@@ -82,7 +74,6 @@ const TagsProvider = (props: object) => {
       `
     });
 
-    console.log(response);
     const entities = Object.keys(response).reduce((acc, key) => {
       const items = response[key].items;
       const tags = items.reduce((acc, item) => {
