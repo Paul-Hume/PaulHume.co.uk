@@ -1,5 +1,6 @@
 html {
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh;
 }
 
 body {
@@ -9,7 +10,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh;
 }
 
 code {
@@ -18,7 +20,8 @@ code {
 }
 
 #root {
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh;
 }
 
 :root {

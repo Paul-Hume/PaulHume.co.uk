@@ -1,20 +1,18 @@
 .container {
-  padding: var(--gap);
-  padding-right: 0;
+  display: grid;
+  gap: var(--gap);
+  grid-template-rows: auto 1fr;
+  min-width: 10rem;
+  height: 100%;
 }
 
 .title {
   text-align: center;
-  margin-bottom: 1rem !important;
 }
 
-.tags {
-  display: flex;
-  flex-direction: column;
+.tags-container {
+  height: 100%;
+  overflow: auto;
+  display: grid;
   gap: 1rem;
-}
-
-.tag {
-  display: flex !important;
-  justify-content: flex-start !important;
 }
