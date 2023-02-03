@@ -1,3 +1,4 @@
+export * from './DownloadBar';
 export * from './Footer';
 export * from './Header';
 export * from './JournalGrid';
