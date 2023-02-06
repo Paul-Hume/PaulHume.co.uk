@@ -53,7 +53,7 @@ export const NavBar = ({ location = 'header' }: NavBarProps) => {
             </>
           )}
 
-          {profileImage && location === 'header' && <Avatar sx={{ marginLeft: 'auto'}} src={profileImage} alt="Paul Hume" />}
+          {profileImage && location === 'header' && <Avatar sx={{ marginLeft: 'auto', border: '1px solid white'}} src={profileImage} alt="Paul Hume" />}
           {location === 'header' && (
             <Typography variant="h6" component="div" sx={{ textAlign: 'right', whiteSpace: 'nowrap', marginLeft: '1rem' }}>
             Paul Hume
