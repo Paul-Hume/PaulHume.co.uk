@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardActionArea, CardContent, CardHeader } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 
-import { Grid, TagBlock } from 'Components';
+import { ErrorAlert, Grid, LoadingSpinner, NoDataAlert, TagBlock } from 'Components';
 
 import { useTags } from 'Context/tagsContext';
 import { useFetchContentful } from 'Hooks';
@@ -56,7 +56,7 @@ export const JournalGrid = ({ limit, journalId }: JournalGridProps) => {
   };
 
 
-  const { isLoading, data, error } = useQuery({ queryKey: ['journals', selectedTags, limit, journalId], queryFn: fetchJournal, staleTime: Infinity, select: (data: JournalResponse) => {
+  const { data, isLoading, error } = useQuery({ queryKey: ['journals', selectedTags, limit, journalId], queryFn: fetchJournal, staleTime: Infinity, select: (data: JournalResponse) => {
     return data?.journalEntryCollection || {};
   }});
 
@@ -65,11 +65,15 @@ export const JournalGrid = ({ limit, journalId }: JournalGridProps) => {
   };
 
   if (isLoading) {
-    return <section>Loading...</section>;
+    return <LoadingSpinner />;
   }
 
   if (error) {
-    return <section>Error loading journal</section>;
+    return <ErrorAlert error="Error retrieving journal list" />;
+  }
+
+  if (!isLoading && !error && !data?.items?.length) {
+    return <NoDataAlert />;
   }
 
   return (

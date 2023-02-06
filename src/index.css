@@ -26,6 +26,11 @@ code {
 
 :root {
   --gap: 16px;
+  --xs-screen: 0px;
+  --sm-screen: 600px;
+  --md-screen: 900px;
+  --lg-screen: 1200px;
+  --xl-screen: 1536px;
 }
 
 @media screen and (min-width: 600px) {

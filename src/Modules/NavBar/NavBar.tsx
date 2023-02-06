@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Description,FilterAlt, Home } from '@mui/icons-material';
+import { Description,DeveloperMode,FilterAlt, Home } from '@mui/icons-material';
 import { Avatar, IconButton,Switch  } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -46,13 +46,14 @@ export const NavBar = ({ location = 'header' }: NavBarProps) => {
           {((largeScreen && location === 'header') || (!largeScreen && location === 'footer')) && (
             <>
               <NavLink to="/" icon={<Home />}>Home</NavLink>
+              <NavLink to="/experience" icon={<DeveloperMode />}>Experience</NavLink>
               <NavLink to="/journal" icon={<Description />}>Journal</NavLink>
               {/* <NavLink to="/projects">Projects</NavLink>
             <NavLink to="/history">History</NavLink> */}
             </>
           )}
 
-          {profileImage && location === 'header' && <Avatar sx={{ marginLeft: 'auto'}} src={profileImage} alt="Paul Hume" />}
+          {profileImage && location === 'header' && <Avatar sx={{ marginLeft: 'auto', border: '1px solid white'}} src={profileImage} alt="Paul Hume" />}
           {location === 'header' && (
             <Typography variant="h6" component="div" sx={{ textAlign: 'right', whiteSpace: 'nowrap', marginLeft: '1rem' }}>
             Paul Hume
