@@ -1,4 +1,5 @@
-import { Typography } from '@mui/material';
+import { useState } from 'react';
+import { Button, Typography } from '@mui/material';
 
 import { LoadingSpinner, TagChip } from 'Components';
 
@@ -8,6 +9,9 @@ import { useTags } from 'Context/tagsContext';
 
 export const SideBar = () => {
   const { loadingTags, tags } = useTags();
+  const [showMore, setShowMore] = useState(false);
+
+  const toggleShowMore = () => setShowMore(!showMore);
 
   return (
     <section className={styles.container}>
@@ -16,9 +20,11 @@ export const SideBar = () => {
       <section className={styles['tags-container']}>
         {loadingTags && <LoadingSpinner />}
 
-        {!loadingTags && tags.map((tag) => (
+        {!loadingTags && tags.filter(tag => showMore ? tag.name : tag.count >= 3).map((tag) => (
           <TagChip className={styles.tag} size="medium" key={tag.id} tag={tag} />
         ))}
+
+        <Button size="small" onClick={toggleShowMore}>{showMore ? 'Show Less' : 'Show More'}</Button>
       </section>
     </section>
   );
