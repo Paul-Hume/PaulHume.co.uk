@@ -1,3 +1,4 @@
+export * from './CvDownloadButton';
 export * from './Grid';
 export * from './Link';
 export * from './LoadingSpinner';
