@@ -1,6 +1,7 @@
 export * from './AvailableFrom';
 export * from './CvDownloadButton';
 export * from './Grid';
+export * from './JobCard';
 export * from './Link';
 export * from './LoadingSpinner';
 export * from './NavLink';

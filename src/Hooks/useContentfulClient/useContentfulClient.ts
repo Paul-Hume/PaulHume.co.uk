@@ -14,7 +14,7 @@ export const useContentfulClient = () => {
     return contentfulClient.getEntry(entryId);
   };
 
-  const fetchEntries = async <ReturnType>(contentType: string, options: Object) => {
+  const fetchEntries = async <ReturnType>(contentType: string, options?: Object) => {
     return contentfulClient.getEntries<ReturnType>({
       content_type: contentType,
       ...options,
