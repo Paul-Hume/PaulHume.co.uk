@@ -6,6 +6,7 @@ export * from './JobCard';
 export * from './Link';
 export * from './LoadingSpinner';
 export * from './NavLink';
+export * from './NoDataAlert';
 export * from './PageContentItem';
 export * from './RenderRichText';
 export * from './SkillsTable';
