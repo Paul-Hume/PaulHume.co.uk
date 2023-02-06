@@ -1,3 +1,4 @@
+export * from './AvailableFrom';
 export * from './CvDownloadButton';
 export * from './Grid';
 export * from './Link';
