@@ -20,7 +20,7 @@ interface JobCardProps {
 export const JobCard = ({ job, tags }: JobCardProps) => {
   const { convertTagLinks } = useTags();
   const theme = useTheme();
-  console.log(convertTagLinks(tags || []));
+
   const details = [
     { label: 'Project', value: job.project },
     { label: 'Role', value: `${job.role} (${job.location})`},
@@ -33,7 +33,7 @@ export const JobCard = ({ job, tags }: JobCardProps) => {
           sx={{ color: theme.palette.primary.main }}
           variant="h5"
         >
-          {job.client}
+          {job.client} {job.contract && '(Contract)'}
         </Typography>
         <section className={styles.date}>
           <Typography

@@ -12,7 +12,7 @@ export const formatDate = (date: string, format?: string): string => {
   return dateFormat(parsedDate, format || 'do MMM yyyy');
 };
 
-export const formatDuration = (from: string, to: string): string => {
+export const formatDuration = (from: string, to: string | Date): string => {
   if (!from || !to) return '';
 
   const fromParsed = new Date(from);

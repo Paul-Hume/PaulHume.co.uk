@@ -1,0 +1,12 @@
+.container {
+  margin-bottom: calc(var(--gap) * 2);
+  max-width: 400px;
+}
+
+.title {
+  margin-bottom: 0;
+}
+
+.date {
+  text-align: right !important;
+}
