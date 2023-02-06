@@ -1,10 +1,18 @@
 .container {
-  padding: calc(var(--gap) / 2);
+  padding: calc(var(--gap) / 2) var(--gap);
   display: flex;
+  flex-direction: column-reverse;
   align-items: center;
-  justify-content: flex-end;
 }
 
-.button {
-  margin-left: calc(var(--gap) / 2);
+.container.large {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
+
+.block {
+  width: 100%;
+  margin-bottom: .5rem !important;
+}
+
