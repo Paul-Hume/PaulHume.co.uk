@@ -4,12 +4,14 @@ import { AvailableFrom, CvDownloadButton } from 'Components';
 
 import styles from './DownloadBar.module.css';
 
-export const DownloadBar = () => {
+import { useMedia } from 'Hooks';
 
+export const DownloadBar = () => {
+  const largeScreen = useMedia('md');
   return (
-    <Paper className={styles.container}>
+    <Paper className={`${styles.container} ${largeScreen ? styles.large : ''}`}>
       <AvailableFrom />
-      <CvDownloadButton />
+      <CvDownloadButton className={largeScreen ? '' : styles.block} />
     </Paper>
   );
 };

@@ -30,7 +30,7 @@ export const AvailableFrom = () => {
     }
 
     if (isFuture(new Date(to)) && isFuture(subWeeks(new Date(to), 4))) {
-      return `Currently in contract with ${client}`;
+      return `In contract with ${client}`;
     }
 
     return `Available from ${formatDate(to, 'dd MMMM yyyy')}`;

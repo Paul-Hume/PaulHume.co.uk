@@ -5,7 +5,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useContentfulClient } from 'Hooks';
 import { formatDate } from 'Utils';
 
-export const CvDownloadButton = () => {
+interface CvDownloadButtonProps {
+  className?: string;
+}
+
+export const CvDownloadButton = ({ className = '' }: CvDownloadButtonProps) => {
   const { fetchAsset } = useContentfulClient();
 
   const { data, isLoading, error } = useQuery({
@@ -15,7 +19,8 @@ export const CvDownloadButton = () => {
   });
 
   return (
-    <LoadingButton 
+    <LoadingButton
+      className={className}
       variant="contained" 
       size="small" 
       startIcon={<CloudDownloadIcon />}
