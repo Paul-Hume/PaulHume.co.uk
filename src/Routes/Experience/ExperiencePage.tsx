@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { ErrorAlert,JobCard, LoadingSpinner, NoDataAlert, SkillsTable, Title } from 'Components';
+import { ErrorAlert,JobCard, LoadingSpinner, NoDataAlert, Title } from 'Components';
 
 import { useTags } from 'Context/tagsContext';
 import { useContentfulClient } from 'Hooks';
@@ -26,11 +26,7 @@ export const ExperiencePage = () => {
   return (
     <section>
       <Title title="Experience" />
-      
-      <SkillsTable />
-      
-      <Title type="h5" title="Previous Roles" />
-      
+                  
       {isLoading && <LoadingSpinner />}
 
       {!!error && <ErrorAlert error="Error retrieving experience list" />}

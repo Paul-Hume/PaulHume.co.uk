@@ -1,6 +1,5 @@
 .container {
   margin-bottom: calc(var(--gap) * 2);
-  max-width: 400px;
 }
 
 .title {
