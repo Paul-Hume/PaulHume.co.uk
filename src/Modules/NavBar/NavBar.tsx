@@ -7,6 +7,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 import { NavLink, ThemeToggleSwitch } from 'Components';
+import { SocialLinks } from 'Modules/SocialLinks';
 import { TagDrawer } from 'Modules/TagDrawer';
 
 import styles from './NavBar.module.css';
@@ -58,6 +59,10 @@ export const NavBar = ({ location = 'header' }: NavBarProps) => {
             <Typography variant="h6" component="div" sx={{ textAlign: 'right', whiteSpace: 'nowrap', marginLeft: '1rem' }}>
             Paul Hume
             </Typography>
+          )}
+
+          {largeScreen && location === 'footer' && (
+            <SocialLinks />
           )}
         </Toolbar>
       </AppBar>

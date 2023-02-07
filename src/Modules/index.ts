@@ -6,4 +6,5 @@ export * from './JournalGrid';
 export * from './NavBar';
 export * from './PageContent';
 export * from './SideBar';
+export * from './SocialLinks';
 export * from './TagDrawer';
