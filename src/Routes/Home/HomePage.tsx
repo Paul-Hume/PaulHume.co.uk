@@ -2,10 +2,12 @@ import { Grid, SkillsTable } from 'Components';
 import { ExperiencePreview } from 'Modules';
 import { PageContent } from 'Modules/PageContent';
 
+import styles from './HomePage.module.css';
+
 export const HomePage = () => {
   return (
     <section>
-      <PageContent page="pageHome" />
+      <PageContent className={styles['content-container']} page="pageHome" />
 
       <Grid>
         <SkillsTable />

@@ -18,9 +18,10 @@ interface PageContentResponse {
 
 interface PageContentProps {
   page: 'pageHome',
+  className?: string;
 }
 
-export const PageContent = ({ page }: PageContentProps) => {
+export const PageContent = ({ page, className = '' }: PageContentProps) => {
   const apiCall = useFetchContentful();
 
   const query = `
@@ -59,7 +60,7 @@ export const PageContent = ({ page }: PageContentProps) => {
   }
 
   return (
-    <section>
+    <section className={className}>
       {data?.map((section, index) => {
         return <PageContentItem key={section.title} content={section} titleType={index > 0 ? 'h4' : undefined} />;
       })}
