@@ -1,5 +1,5 @@
-import { Title } from 'Components';
-import { JournalGrid } from 'Modules';
+import { Grid, SkillsTable } from 'Components';
+import { ExperiencePreview } from 'Modules';
 import { PageContent } from 'Modules/PageContent';
 
 export const HomePage = () => {
@@ -7,8 +7,10 @@ export const HomePage = () => {
     <section>
       <PageContent page="pageHome" />
 
-      <Title type="h4" title="Latest Journal Entries" />
-      <JournalGrid limit={3} />
+      <Grid>
+        <SkillsTable />
+        <ExperiencePreview />
+      </Grid>
     </section>
   );
 };
