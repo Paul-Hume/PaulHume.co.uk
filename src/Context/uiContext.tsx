@@ -3,7 +3,7 @@ import { Theme } from '@mui/material';
 import { createClient } from 'contentful';
 
 import { draculaTheme } from 'Themes/dracular';
-import { lightOrangeTheme } from 'Themes/lightOrange';
+import { lightTheme } from 'Themes/light';
 import { getCookie, setCookie } from 'Utils';
 
 export interface UiContext {
@@ -46,7 +46,7 @@ const UiProvider = (props: object) => {
   }, []);
 
 
-  const currentTheme: Theme = useMemo(() => theme === 'dark' ? draculaTheme : lightOrangeTheme, [theme]);
+  const currentTheme: Theme = useMemo(() => theme === 'dark' ? draculaTheme : lightTheme, [theme]);
 
   const value: UiContext = useMemo(
     () => ({

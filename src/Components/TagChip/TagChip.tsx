@@ -22,7 +22,7 @@ export const TagChip = ({ tag, size, className, color }: TagChipProps) => {
       label={(
         <div className={styles.container}>
           <span>{tag.name}</span>
-          <span className={tag.count ? styles['tag-count'] : ''}>{tag.count}</span>
+          {tag.count > 0 && <span className={tag.count ? styles['tag-count'] : ''}>{tag.count}</span>}
         </div>
       )}
       variant={selectedTags.includes(tag?.id || tag.id || '') ? undefined : 'outlined'}

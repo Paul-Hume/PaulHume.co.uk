@@ -40,11 +40,10 @@ export const Root = () => {
                 </Container>
               </article>
             </section>
-            {smallScreen && (
-              <footer className={styles.footer}>
-                <Footer />
-              </footer>
-            )}
+            
+            <footer className={styles.footer}>
+              <Footer />
+            </footer>
           </Paper>
         </TagsProvider>
       </QueryClientProvider>

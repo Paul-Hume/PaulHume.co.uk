@@ -1,5 +1,6 @@
 import { createContext, useCallback,useContext, useEffect, useMemo, useState } from 'react';
-import { createClient } from 'contentful';
+import { createClient, TagLink } from 'contentful';
+import { orderBy } from 'lodash';
 
 import { useFetchContentful } from 'Hooks';
 import { Tag } from 'Types/tag.types';
@@ -19,6 +20,7 @@ export interface TagsContext {
   tags: Tag[];
   selectedTags: string[];
   updateSelectedTags: (category: string) => void;
+  convertTagLinks: (tagLinks: TagLink[]) => Tag[];
 }
 
 const Tags = createContext<TagsContext>({
@@ -26,6 +28,7 @@ const Tags = createContext<TagsContext>({
   tags: [],
   selectedTags: [],
   updateSelectedTags: () => {},
+  convertTagLinks: () => [],
 });
 
 const TagsProvider = (props: object) => {
@@ -126,17 +129,28 @@ const TagsProvider = (props: object) => {
     });
   }, []);
 
-  // sort tags by count descending
-  
+  const convertTagLinks = useCallback((tagLinks: TagLink[]): Tag[] => {
+    return tagLinks.reduce((arr: Tag[], current: TagLink) => {
+      const tag = tags.find((tag) => tag.id === current.sys.id);
+      if (tag) {
+        arr.push({
+          ...tag,
+          count: 0,
+        });
+      }
+      return arr;
+    }, []);
+  }, [tags]);
 
   const value: TagsContext = useMemo(
     () => ({
       loadingTags,
-      tags: tags.sort((a, b) => b.count - a.count),
+      tags: orderBy(tags, ['count'], ['desc']),
       selectedTags,
       updateSelectedTags,
+      convertTagLinks,
     }),
-    [loadingTags, selectedTags, tags, updateSelectedTags],
+    [convertTagLinks, loadingTags, selectedTags, tags, updateSelectedTags],
   );
 
   return <Tags.Provider value={value} {...props} />;

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter ,RouterProvider } from 'react-router-dom';
 
-import { ErrorPage, JournalItemPage, JournalPage, Root } from 'Routes';
+import { ErrorPage, ExperiencePage, JournalItemPage, JournalPage, Root } from 'Routes';
 
 import './index.css';
 
@@ -11,6 +11,7 @@ import { UiProvider } from 'Context/uiContext';
 
 const router = createBrowserRouter([
   { path: '/', element: <Root />, errorElement: <ErrorPage />, children: [
+    { path: 'experience', element: <ExperiencePage />},
     { path: 'journal', element: <JournalPage />, children: [
       { path: ':journalId', element: <JournalItemPage /> }
     ] },

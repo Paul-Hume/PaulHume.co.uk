@@ -1,0 +1,43 @@
+.container {
+  margin-bottom: calc(var(--gap) * 2);
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.title h5, .title h6, .title span {
+  line-height: 1.25em;
+}
+
+.date {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-collection {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 1rem;
+}
+
+.label {
+  font-weight: bold;
+}
+
+
+@media screen and (min-width: 900px) {
+  .title {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .date {
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 1rem;
+  }
+}
