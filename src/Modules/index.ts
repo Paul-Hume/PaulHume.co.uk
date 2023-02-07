@@ -1,4 +1,5 @@
 export * from './DownloadBar';
+export * from './ExperiencePreview';
 export * from './Footer';
 export * from './Header';
 export * from './JournalGrid';

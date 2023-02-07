@@ -1,4 +1,5 @@
-import { SkillsTable } from 'Components';
+import { Grid, SkillsTable } from 'Components';
+import { ExperiencePreview } from 'Modules';
 import { PageContent } from 'Modules/PageContent';
 
 export const HomePage = () => {
@@ -6,7 +7,12 @@ export const HomePage = () => {
     <section>
       <PageContent page="pageHome" />
 
-      <SkillsTable />
+      <Grid>
+        <SkillsTable />
+        <ExperiencePreview />
+      </Grid>
+
+
     </section>
   );
 };
