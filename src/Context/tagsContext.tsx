@@ -1,5 +1,6 @@
 import { createContext, useCallback,useContext, useEffect, useMemo, useState } from 'react';
 import { createClient, TagLink } from 'contentful';
+import { orderBy } from 'lodash';
 
 import { useFetchContentful } from 'Hooks';
 import { Tag } from 'Types/tag.types';
@@ -144,7 +145,7 @@ const TagsProvider = (props: object) => {
   const value: TagsContext = useMemo(
     () => ({
       loadingTags,
-      tags: tags.sort((a, b) => b.count - a.count),
+      tags: orderBy(tags, ['count'], ['desc']),
       selectedTags,
       updateSelectedTags,
       convertTagLinks,
