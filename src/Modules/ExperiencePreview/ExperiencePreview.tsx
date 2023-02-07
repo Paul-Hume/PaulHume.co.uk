@@ -1,14 +1,16 @@
-import { Table, TableBody, TableCell,TableRow } from '@mui/material';
+import { Table, TableBody, TableCell,TableRow, Typography } from '@mui/material';
 
 import { ErrorAlert, LoadingSpinner, NoDataAlert, Title } from 'Components';
 
 import styles from './ExperiencePreview.module.css';
 
-import { useExperience } from 'Hooks';
+import { useExperience, useMedia } from 'Hooks';
 import { formatDuration } from 'Utils';
 
 export const ExperiencePreview = () => {
   const { data, isLoading, error } = useExperience({ limit: 5 });
+  const mediumScreen = useMedia('md');
+  const largeScreen = useMedia('lg');
 
   return (
     <section>
@@ -27,8 +29,11 @@ export const ExperiencePreview = () => {
           <TableBody>
             {data?.items?.map(item => (
               <TableRow key={item.sys.id}>
-                <TableCell>{item.fields.role} - {item.fields.client}</TableCell>
-                <TableCell className={styles.date}>{formatDuration(item.fields.from, item.fields.to)}</TableCell>
+                <TableCell>
+                  {item.fields.role} - {item.fields.client}
+                  {!mediumScreen && <Typography variant="caption"><br />{formatDuration(item.fields.from, item.fields.to)}</Typography>}
+                </TableCell>
+                {largeScreen && <TableCell className={styles.date}>{formatDuration(item.fields.from, item.fields.to)}</TableCell>}
               </TableRow>
             ))}
           </TableBody>

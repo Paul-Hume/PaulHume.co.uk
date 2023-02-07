@@ -11,8 +11,6 @@ export const HomePage = () => {
         <SkillsTable />
         <ExperiencePreview />
       </Grid>
-
-
     </section>
   );
 };
