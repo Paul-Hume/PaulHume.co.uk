@@ -1,11 +1,10 @@
-import { ItemContent } from './util.types';
+import Contentful from 'contentful';
 
+export type PageTag = 'pageHome';
 export interface PageSection {
-  sys: {
-    id: string;
-  };
-  showTitle: boolean;
-  title: string;
-  subTitle?: string;
-  content: ItemContent;
+  showTitle: Contentful.EntryFields.Boolean;
+  title: Contentful.EntryFields.Text;
+  subTitle: Contentful.EntryFields.Text;
+  content: Contentful.EntryFields.RichText;
+  sortOrder: Contentful.EntryFields.Number;
 }

@@ -1,21 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { Card, CardActionArea, CardContent, CardHeader } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 
 import { ErrorAlert, Grid, LoadingSpinner, NoDataAlert, TagBlock } from 'Components';
 
-import { useTags } from 'Context/tagsContext';
-import { useFetchContentful } from 'Hooks';
-import { JournalEntryPartialQuery } from 'Queries/journal.query';
-import { JournalEntryPartial } from 'Types';
+import { useJournal } from 'Hooks';
 import { formatDate } from 'Utils';
-
-interface JournalResponse {
-  journalEntryCollection: {
-    total: number;
-    items: JournalEntryPartial[];
-  }
-}
 
 interface JournalGridProps {
   limit?: number;
@@ -23,42 +12,9 @@ interface JournalGridProps {
 }
 
 export const JournalGrid = ({ limit, journalId }: JournalGridProps) => {
-  const apiCall = useFetchContentful();
-  const { selectedTags } = useTags();
   const navigate = useNavigate();
 
-  const filter = `
-    where: { 
-      ${selectedTags.length > 0 ? `
-        contentfulMetadata: { 
-          tags: { 
-            id_contains_some: [${selectedTags.map(tag => `"${tag}"`)}]
-          }
-        }
-      ` : ''}
-      ${journalId ? `sys: { id_not: "${journalId}" }` : ''}
-    } `;
-
-  const query = `
-    {
-      journalEntryCollection(limit: ${limit} ${filter} order: sys_firstPublishedAt_DESC) {
-        total
-        items {
-          ${JournalEntryPartialQuery}
-        }
-      }
-    }
-  `;
-
-  const fetchJournal = async () => {
-    const response = await apiCall({ query});
-    return response;
-  };
-
-
-  const { data, isLoading, error } = useQuery({ queryKey: ['journals', selectedTags, limit, journalId], queryFn: fetchJournal, staleTime: Infinity, select: (data: JournalResponse) => {
-    return data?.journalEntryCollection || {};
-  }});
+  const { data, isLoading, error } = useJournal({ limit, journalId });
 
   const navigateJournalItem = (slug: string) => {
     navigate(`/journal/${slug}`);
@@ -78,12 +34,12 @@ export const JournalGrid = ({ limit, journalId }: JournalGridProps) => {
 
   return (
     <Grid>
-      {!error && data?.items?.map((journalItem: JournalEntryPartial) => (
+      {data?.items?.map((journalItem) => (
         <Card key={journalItem.sys.id}>
-          <CardActionArea onClick={() => navigateJournalItem(journalItem.slug)} sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-            <CardHeader title={journalItem.title} subheader={formatDate(journalItem.sys.firstPublishedAt)} />
+          <CardActionArea onClick={() => navigateJournalItem(journalItem.fields.slug)} sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+            <CardHeader title={journalItem.fields.title} subheader={formatDate(journalItem.sys.createdAt)} />
             <CardContent>
-              <TagBlock tags={journalItem.contentfulMetadata.tags} />
+              <TagBlock tags={journalItem.metadata.tags} />
             </CardContent>
           </CardActionArea>
         </Card>

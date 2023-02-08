@@ -10,8 +10,8 @@ export const useContentfulClient = () => {
     return contentfulClient.getAsset(assetId);
   };
 
-  const fetchEntry = async (entryId: string) => {
-    return contentfulClient.getEntry(entryId);
+  const fetchEntry = async <ReturnType>(entryId: string) => {
+    return contentfulClient.getEntry<ReturnType>(entryId);
   };
 
   const fetchEntries = async <ReturnType>(contentType: string, options?: Object) => {
@@ -21,9 +21,14 @@ export const useContentfulClient = () => {
     });
   };
 
+  const fetchTags = async () => {
+    return contentfulClient.getTags();
+  };
+
   return {
     fetchAsset,
     fetchEntry,
     fetchEntries,
+    fetchTags,
   };
 };

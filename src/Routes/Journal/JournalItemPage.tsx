@@ -1,50 +1,43 @@
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 
-import { RenderRichText, TagBlock,Title } from 'Components';
+import { ErrorAlert, LoadingSpinner, NoDataAlert, RenderRichText,TagBlock,Title  } from 'Components';
 import { JournalGrid } from 'Modules';
 
 import styles from './JournalItemPage.module.css';
 
-import { useFetchContentful } from 'Hooks';
-import { JournalEntryFullQuery } from 'Queries/journal.query';
-import { JournalEntryFull } from 'Types';
+import { useJournalItem  } from 'Hooks';
 import { formatDate } from 'Utils';
 
 export const JournalItemPage = () => {
-  const { journalId } = useParams();
-  const apiCall = useFetchContentful();
+  const { slug } = useParams();
 
-  const query = `
-  {
-    journalEntryCollection(limit: 1, where: { slug: "${journalId}" }) {
-      items {
-        ${JournalEntryFullQuery}
-      }
-    }
+  const { data, isLoading, error } = useJournalItem({ slug });
+
+  if (isLoading) {
+    return <LoadingSpinner />;
   }
-  `;
 
-  const fetchJournalItem = async () => {
-    const response = await apiCall({ query});
-    return response.journalEntryCollection.items[0];
-  };
+  if (error) {
+    return <ErrorAlert error="Error retrieving journal entry" />;
+  }
 
-  const { data } = useQuery({ queryKey: ['journalItem', journalId], queryFn: fetchJournalItem, staleTime: Infinity, select: (data: JournalEntryFull) => {
-    return data || {};
-  }});
+  if (!isLoading && !error && !data?.items?.length) {
+    return <NoDataAlert />;
+  }
 
+  const journalEntry = data?.items[0];
+  
   return (
     <section>
-      <Title title={data?.title || ''} subTitle={formatDate(data?.sys?.firstPublishedAt || '')} />
+      <Title title={journalEntry?.fields.title || ''} subTitle={formatDate(journalEntry?.sys.createdAt || '')} />
       
-      <TagBlock align="right" size="medium" tags={data?.contentfulMetadata?.tags} />
+      <TagBlock align="right" size="medium" tags={journalEntry?.metadata.tags} />
 
-      { data?.content && <RenderRichText className={styles.container} content={data?.content} />}
+      { journalEntry?.fields.content && <RenderRichText className={styles.container} content={journalEntry.fields.content} />}
 
       <Title title="Latest Entries" type="h4" />
 
-      <JournalGrid limit={2} journalId={data?.sys?.id} />
+      <JournalGrid limit={2} journalId={journalEntry?.sys?.id} />
     </section>
   );
 };

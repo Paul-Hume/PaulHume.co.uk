@@ -4,38 +4,29 @@ import Contentful from 'contentful';
 
 import styles from './RenderRichText.module.css';
 
-import { AssetNode, ItemContent } from 'Types';
 import { sanitizeHtml } from 'Utils';
 
 interface RenderRichTextProps {
   className: string;
-  content: ItemContent | Contentful.EntryFields.RichText;
+  content: Contentful.EntryFields.RichText;
 }
 
 export const RenderRichText = ({ content, className }: RenderRichTextProps) => {
-  let options = {};
-  let renderContent = undefined;
+  let options = {
+    renderNode: {
+      [BLOCKS.EMBEDDED_ASSET]: (node: unknown) => {
+        //  @ts-ignore
+        const assetUrl = node?.data?.target?.fields?.file?.url;
 
-  const isItemContent = (content: ItemContent | Contentful.EntryFields.RichText): content is ItemContent => {
-    return (content as ItemContent)?.json !== undefined;
+        if (!assetUrl) return null;
+
+        return `<img src="${assetUrl}" />`;
+      }
+    }
   };
 
-  if (isItemContent(content)) {
-    const assets = content?.links?.assets?.block;
-
-    options = {
-      renderNode: {
-        [BLOCKS.EMBEDDED_ASSET]: (node: Object) => {
-          return `<img src="${assets.find(asset => asset.sys.id === (node as AssetNode).data.target.sys.id)?.url}" />`;
-        }
-      }
-    };
-
-    renderContent = documentToHtmlString(content?.json, options);
-  } else {
-    // @ts-ignore
-    renderContent = documentToHtmlString(content, options);
-  }
+  // @ts-ignore
+  const renderContent = documentToHtmlString(content, options);
   
   return (
     <section className={`${styles.container} ${className}`} dangerouslySetInnerHTML={{__html: sanitizeHtml(renderContent)}} />

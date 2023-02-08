@@ -8,15 +8,6 @@
   margin-bottom: 1rem;
 }
 
-.title h5, .title h6, .title span {
-  line-height: 1.25em;
-}
-
-.date {
-  display: flex;
-  flex-direction: column;
-}
-
 .item-collection {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -33,11 +24,10 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    gap: 1rem;
   }
 
-  .date {
-    flex-direction: row-reverse;
-    align-items: center;
-    gap: 1rem;
+  .title>*:last-child {
+    margin-left: auto;
   }
 }

@@ -1,68 +1,30 @@
-import { Alert } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
-
-import { LoadingSpinner, PageContentItem } from 'Components';
+import { ErrorAlert, LoadingSpinner, PageContentItem } from 'Components';
 
 import styles from './PageContent.module.css';
 
-import { useFetchContentful } from 'Hooks';
-import { PageQuery } from 'Queries/page.query';
-import { PageSection } from 'Types/page.types';
-
-interface PageContentResponse {
-  pageSectionsCollection: {
-    total: number;
-    items: PageSection[];
-  }
-}
+import { usePageContent } from 'Hooks';
+import { PageTag } from 'Types/page.types';
 
 interface PageContentProps {
-  page: 'pageHome',
+  pageTag: PageTag,
   className?: string;
 }
 
-export const PageContent = ({ page, className = '' }: PageContentProps) => {
-  const apiCall = useFetchContentful();
-
-  const query = `
-    {
-      pageSectionsCollection(
-        where: {contentfulMetadata: {tags: {id_contains_some: ["${page}"]}}}
-        order: sortOrder_ASC
-      ) {
-        total
-        items {
-          ${PageQuery}
-        }
-      }
-    }
-  `;
-
-  const fetchPageContent = async () => {
-    return apiCall({ query });
-  };
-
-  const {isLoading, data, error } = useQuery({ 
-    queryKey: ['pageContent', page],
-    queryFn: fetchPageContent,
-    staleTime: Infinity,
-    select: (data: PageContentResponse) => {
-      return data?.pageSectionsCollection?.items || [];
-    }
-  });
+export const PageContent = ({ pageTag, className = '' }: PageContentProps) => {
+  const { data, isLoading, error } = usePageContent({ pageTag });
 
   if (isLoading) {
     return <LoadingSpinner className={styles['loading-spinner']} />;
   }
 
   if (error) {
-    return <section className={styles['error-message']}><Alert severity='error'>Sorry, there seems to have been an error loading Home Page. Please try again later.</Alert></section>;
+    return <ErrorAlert error="Sorry, there seems to have been an error loading Home Page. Please try again later." />;
   }
 
   return (
     <section className={className}>
-      {data?.map((section, index) => {
-        return <PageContentItem key={section.title} content={section} titleType={index > 0 ? 'h4' : undefined} />;
+      {data?.items?.map((section, index) => {
+        return <PageContentItem key={section.fields.title} content={section.fields} titleType={index > 0 ? 'h4' : undefined} />;
       })}
     </section>
   );
