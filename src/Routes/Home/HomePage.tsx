@@ -7,7 +7,7 @@ import styles from './HomePage.module.css';
 export const HomePage = () => {
   return (
     <section>
-      <PageContent className={styles['content-container']} page="pageHome" />
+      <PageContent className={styles['content-container']} pageTag="pageHome" />
 
       <Grid>
         <SkillsTable />

@@ -1,22 +1,15 @@
 import { Table, TableBody, TableCell, TableRow } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 
 import { ErrorAlert,LoadingSpinner,Title } from 'Components';
 
 import styles from './SkillsTable.module.css';
 
-import { useContentfulClient } from 'Hooks';
-import { Skill } from 'Types/skill.types';
+import { useSkills } from 'Hooks';
 import { formatDuration } from 'Utils';
 
 export const SkillsTable = () => {
-  const { fetchEntries } = useContentfulClient();
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['skills'],
-    queryFn: () => fetchEntries<Skill>('skill', { order: '-fields.date' }),
-    staleTime: Infinity,
-  });
+  const { data, isLoading, error } = useSkills();
 
   return (
     <section className={styles.container}>

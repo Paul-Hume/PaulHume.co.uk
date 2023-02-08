@@ -8,7 +8,7 @@ import styles from './SideBar.module.css';
 import { useTags } from 'Context/tagsContext';
 
 export const SideBar = () => {
-  const { loadingTags, tags } = useTags();
+  const { isLoading, tags } = useTags();
   const [showMore, setShowMore] = useState(false);
 
   const toggleShowMore = () => setShowMore(!showMore);
@@ -18,9 +18,9 @@ export const SideBar = () => {
       <Typography className={styles.title} variant="h6">Filters</Typography>
 
       <section className={styles['tags-container']}>
-        {loadingTags && <LoadingSpinner />}
+        {isLoading && <LoadingSpinner />}
 
-        {!loadingTags && tags.filter(tag => showMore ? tag.count >= 1 : tag.count >= 3).map((tag) => (
+        {!isLoading && tags.filter(tag => tag.selected || showMore ? tag.count >= 1 : tag.count >= 3).map((tag) => (
           <TagChip className={styles.tag} size="medium" key={tag.id} tag={tag} />
         ))}
 

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Description,DeveloperMode,FilterAlt, Home } from '@mui/icons-material';
-import { Avatar, IconButton,Switch  } from '@mui/material';
+import { Avatar, IconButton  } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';

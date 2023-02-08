@@ -17,24 +17,24 @@ const queryClient = new QueryClient();
 export const Root = () => {
   const outlet = useOutlet();
   const { currentTheme } = useUi();
-  const smallScreen = useMedia('sm', 'down');
+  const mediumScreen = useMedia('md');
     
   return (
     <ThemeProvider theme={currentTheme}>
       <CssBaseline enableColorScheme />
       <QueryClientProvider client={queryClient}>
         <TagsProvider>
-          <Paper className={`${styles.container} ${smallScreen ? '' : styles.largeScreen}`} elevation={0}>
+          <Paper className={`${styles.container} ${mediumScreen ? styles['medium-screen'] : ''}`} elevation={0}>
             <header className={styles.header}>
               <Header />
             </header>
-            <section className={`${styles.content} ${smallScreen ? '' : styles.largeScreen}`}>
-              {!smallScreen && (
+            <section className={`${styles.content} ${mediumScreen ? styles['medium-screen'] : ''}`}>
+              {mediumScreen && (
                 <aside className={styles.aside}>
                   <SideBar />
                 </aside>
               )}
-              <article className={`${styles['page-content']} ${smallScreen ? '' : styles.largeScreen}`}>
+              <article className={`${styles['page-content']} ${mediumScreen ? styles['medium-screen'] : ''}`}>
                 <Container className={styles['page-container']}>
                   {outlet || <HomePage />}
                 </Container>

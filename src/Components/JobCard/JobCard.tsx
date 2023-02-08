@@ -8,9 +8,9 @@ import { TagBlock } from 'Components/TagBlock';
 
 import styles from './JobCard.module.css';
 
-import { useTags } from 'Context/tagsContext';
-import { JobHistoryItem, Tag } from 'Types';
-import { formatDate, formatDuration } from 'Utils';
+import { useMedia } from 'Hooks';
+import { JobHistoryItem } from 'Types';
+import { formatDate } from 'Utils';
 
 interface JobCardProps {
   job: JobHistoryItem;
@@ -18,13 +18,24 @@ interface JobCardProps {
 }
 
 export const JobCard = ({ job, tags }: JobCardProps) => {
-  const { convertTagLinks } = useTags();
+  const largeScreen = useMedia('md');
   const theme = useTheme();
 
   const details = [
-    { label: 'Project', value: job.project },
-    { label: 'Role', value: `${job.role} (${job.location})`},
+    { label: 'Client', value: `${job.client}${job.project ? ` - ${job.project}` : ''}` },
+    { label: 'Location', value: job.location },
   ];
+
+  const subTitle = function(data: JobHistoryItem) {
+    const title = [];
+
+    if (data.location === 'Remote') title.push('Remote');
+    if (data.contract) title.push('Contract');
+
+    if (!title.length) return null;
+
+    return `(${title.join(' ')})`;
+  }(job);
 
   return (
     <section className={styles.container}>
@@ -33,16 +44,20 @@ export const JobCard = ({ job, tags }: JobCardProps) => {
           sx={{ color: theme.palette.primary.main }}
           variant="h5"
         >
-          {job.client} {job.contract && '(Contract)'}
+          {job.role}
         </Typography>
-        <section className={styles.date}>
-          <Typography
-            variant="subtitle1"
-          >
-            {formatDate(job.from, 'MMM yyyy')} - {isFuture(new Date(job.to)) ? 'Present' :  formatDate(job.to, 'MMM yyyy')} 
+
+        {subTitle && (
+          <Typography variant={largeScreen ? 'h5' : 'subtitle1'} sx={{ color: theme.palette.primary.main }}>
+            {subTitle}
           </Typography>
-          <Typography variant="caption">({formatDuration(job.from, job.to)})</Typography>
-        </section>
+        )}
+        
+        <Typography
+          variant="subtitle1"
+        >
+          {formatDate(job.from, 'MMM yyyy')} - {isFuture(new Date(job.to)) ? 'Present' :  formatDate(job.to, 'MMM yyyy')} 
+        </Typography>
       </section>
 
       <section className={styles['item-collection']}>
@@ -60,7 +75,7 @@ export const JobCard = ({ job, tags }: JobCardProps) => {
 
       <RenderRichText content={job.description} />
 
-      <TagBlock tags={convertTagLinks(tags || [])} size="small" align="right" />
+      <TagBlock tags={tags} size="small" align="right" />
 
     </section>
   );

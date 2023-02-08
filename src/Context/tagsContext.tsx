@@ -1,30 +1,24 @@
-import { createContext, useCallback,useContext, useEffect, useMemo, useState } from 'react';
-import { createClient, TagLink } from 'contentful';
+import { createContext, useCallback,useContext, useMemo, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { TagLink } from 'contentful';
 import { orderBy } from 'lodash';
 
-import { useFetchContentful } from 'Hooks';
+import { useContentfulClient } from 'Hooks';
+import { useTagCount } from 'Hooks/useTagCount/useTagCount';
 import { Tag } from 'Types/tag.types';
 
-interface EntitiesResponse {
-  [key: string]: {
-    items: {
-      contentfulMetadata: {
-        tags: Tag[];
-      }
-    }[]
-  }
-}
-
 export interface TagsContext {
-  loadingTags: boolean;
+  isLoading: boolean;
+  error: boolean;
   tags: Tag[];
   selectedTags: string[];
   updateSelectedTags: (category: string) => void;
-  convertTagLinks: (tagLinks: TagLink[]) => Tag[];
+  convertTagLinks: (tagLinks: TagLink[]) => Tag[],
 }
 
 const Tags = createContext<TagsContext>({
-  loadingTags: false,
+  isLoading: false,
+  error: false,
   tags: [],
   selectedTags: [],
   updateSelectedTags: () => {},
@@ -32,93 +26,16 @@ const Tags = createContext<TagsContext>({
 });
 
 const TagsProvider = (props: object) => {
-  const [loadingTags, setLoadingTags] = useState(false);
-  const [tags, setTags] = useState<Tag[]>([]);
+  const { fetchTags } = useContentfulClient();
+  const { data: tagCount, isLoading: loadingTagCount, error: errorTagCount } = useTagCount();
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const apiCall = useFetchContentful();
 
-  const contentfulClient = createClient({
-    space: `${process.env.REACT_APP_SPACE}`,
-    accessToken: `${process.env.REACT_APP_READ_ONLY_TOKEN}`,
+  const { data, isLoading, error } = useQuery({
+    enabled: !loadingTagCount && !errorTagCount && Object.keys(tagCount).length > 0,
+    queryKey: ['tags'],
+    queryFn: fetchTags,
+    staleTime: Infinity,
   });
-
-  const getTagCounts = async () => {
-    const response: EntitiesResponse = await apiCall({
-      query: `
-      {
-        projectCollection {
-          items {
-            contentfulMetadata {
-              tags {
-                id
-              }
-            }
-          }
-        }
-        journalEntryCollection {
-          items {
-            contentfulMetadata {
-              tags {
-                id
-              }
-            }
-          }
-        }
-        jobHistoryItemCollection {
-          items {
-            contentfulMetadata {
-              tags {
-                id
-              }
-            }
-          }
-        }
-      }
-      `
-    });
-
-    const entities = Object.keys(response).reduce((acc, key) => {
-      const items = response[key].items;
-      const tags = items.reduce((acc, item) => {
-        const tags = item.contentfulMetadata.tags;
-        return [...acc, ...tags];
-      }, [] as Tag[]);
-      return [...acc, ...tags];
-    }, [] as Tag[]);
-
-    // Count the unique tags in entities
-    const tagCounts = entities.reduce((acc, tag) => {
-      if (acc[tag.id as string]) {
-        acc[tag.id as string] += 1;
-      } else {
-        acc[tag.id as string] = 1;
-      }
-      return acc;
-    }
-    , {} as { [key: string]: number });
-
-    return tagCounts;
-  };
-
-
-  useEffect(() => {
-    setLoadingTags(true);
-    contentfulClient.getTags({
-      entries: {
-        
-      },
-    }).then(async (tagsResponse) => {
-      const tagCounts = await getTagCounts();
-
-      return tagsResponse.items.map((tag) => ({ id: tag.sys.id, name: tag.name, count: tagCounts[tag.sys.id] })).filter(tag => !tag.name.toLowerCase().includes('page'));
-    }).then(response => {
-      setTags(response);
-    }).finally(() => setLoadingTags(false));
-
-  // * Need this disabled because contentfulClient is not memoized
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
 
   const updateSelectedTags = useCallback((category: string) => {
     setSelectedTags((prev) => {
@@ -129,9 +46,15 @@ const TagsProvider = (props: object) => {
     });
   }, []);
 
+  const sortedTags = useMemo((): Tag[] => {
+    if (!data) return [];
+
+    return orderBy(data.items.map(tag => ({ id: tag.sys.id, name: tag.name, count: tagCount[tag.sys.id], selected: selectedTags.includes(tag.sys.id) })), ['selected', 'count', 'name'], ['desc','desc', 'asc']);
+  }, [data, selectedTags, tagCount]);
+
   const convertTagLinks = useCallback((tagLinks: TagLink[]): Tag[] => {
     return tagLinks.reduce((arr: Tag[], current: TagLink) => {
-      const tag = tags.find((tag) => tag.id === current.sys.id);
+      const tag = sortedTags?.find((tag) => tag.id === current.sys.id);
       if (tag) {
         arr.push({
           ...tag,
@@ -140,17 +63,18 @@ const TagsProvider = (props: object) => {
       }
       return arr;
     }, []);
-  }, [tags]);
+  }, [sortedTags]);
 
   const value: TagsContext = useMemo(
     () => ({
-      loadingTags,
-      tags: orderBy(tags, ['count'], ['desc']),
+      isLoading: loadingTagCount || isLoading,
+      error: !!error || errorTagCount,
+      tags: sortedTags || [],
       selectedTags,
       updateSelectedTags,
       convertTagLinks,
     }),
-    [convertTagLinks, loadingTags, selectedTags, tags, updateSelectedTags],
+    [loadingTagCount, isLoading, error, errorTagCount, sortedTags, selectedTags, updateSelectedTags, convertTagLinks],
   );
 
   return <Tags.Provider value={value} {...props} />;
