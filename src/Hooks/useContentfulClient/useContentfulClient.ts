@@ -21,9 +21,14 @@ export const useContentfulClient = () => {
     });
   };
 
+  const fetchTags = async () => {
+    return contentfulClient.getTags();
+  };
+
   return {
     fetchAsset,
     fetchEntry,
     fetchEntries,
+    fetchTags,
   };
 };
