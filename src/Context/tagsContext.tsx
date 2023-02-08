@@ -35,9 +35,6 @@ const TagsProvider = (props: object) => {
     queryKey: ['tags'],
     queryFn: fetchTags,
     staleTime: Infinity,
-    select: (data) => {
-      return orderBy(data.items.map(tag => ({ id: tag.sys.id, name: tag.name, count: tagCount[tag.sys.id] })), ['count', 'name'], ['desc', 'asc']);
-    }
   });
 
   const updateSelectedTags = useCallback((category: string) => {
@@ -49,9 +46,15 @@ const TagsProvider = (props: object) => {
     });
   }, []);
 
+  const sortedTags = useMemo((): Tag[] => {
+    if (!data) return [];
+
+    return orderBy(data.items.map(tag => ({ id: tag.sys.id, name: tag.name, count: tagCount[tag.sys.id], selected: selectedTags.includes(tag.sys.id) })), ['selected', 'count', 'name'], ['desc','desc', 'asc']);
+  }, [data, selectedTags, tagCount]);
+
   const convertTagLinks = useCallback((tagLinks: TagLink[]): Tag[] => {
     return tagLinks.reduce((arr: Tag[], current: TagLink) => {
-      const tag = data?.find((tag) => tag.id === current.sys.id);
+      const tag = sortedTags?.find((tag) => tag.id === current.sys.id);
       if (tag) {
         arr.push({
           ...tag,
@@ -60,18 +63,18 @@ const TagsProvider = (props: object) => {
       }
       return arr;
     }, []);
-  }, [data]);
+  }, [sortedTags]);
 
   const value: TagsContext = useMemo(
     () => ({
       isLoading: loadingTagCount || isLoading,
       error: !!error || errorTagCount,
-      tags: data || [],
+      tags: sortedTags || [],
       selectedTags,
       updateSelectedTags,
       convertTagLinks,
     }),
-    [loadingTagCount, isLoading, error, errorTagCount, data, selectedTags, updateSelectedTags, convertTagLinks],
+    [loadingTagCount, isLoading, error, errorTagCount, sortedTags, selectedTags, updateSelectedTags, convertTagLinks],
   );
 
   return <Tags.Provider value={value} {...props} />;

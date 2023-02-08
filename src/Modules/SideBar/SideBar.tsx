@@ -20,7 +20,7 @@ export const SideBar = () => {
       <section className={styles['tags-container']}>
         {isLoading && <LoadingSpinner />}
 
-        {!isLoading && tags.filter(tag => showMore ? tag.count >= 1 : tag.count >= 3).map((tag) => (
+        {!isLoading && tags.filter(tag => tag.selected || showMore ? tag.count >= 1 : tag.count >= 3).map((tag) => (
           <TagChip className={styles.tag} size="medium" key={tag.id} tag={tag} />
         ))}
 
