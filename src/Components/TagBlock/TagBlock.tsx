@@ -1,22 +1,28 @@
+import { TagLink } from 'contentful';
+
 import { TagChip } from 'Components/TagChip';
 
 import styles from './TagBlock.module.css';
 
-import { Tag } from 'Types/tag.types';
+import { useTags } from 'Context/tagsContext';
 
 interface TagBlockProps {
-  tags: Tag[];
+  tags: TagLink[];
   color?: 'primary' | 'secondary' | 'success' | 'error' | 'warning' | 'info' | 'default';
   align?: 'left' | 'center' | 'right';
   size?: 'small' | 'medium';
 }
 
 export const TagBlock = ({ tags, color, align, size }: TagBlockProps) => {
+  const { convertTagLinks } = useTags();
+
   if (tags.length === 0) return null;
+
+  const convertedTags = convertTagLinks(tags) || [];
 
   return (
     <section className={`${styles.container} ${styles[`align-${align}`]}`}>
-      {tags.map((tag: Tag) => (<TagChip className={styles.chip} key={tag.id} tag={tag} color={color} size={size} />))}
+      {convertedTags.map((tag) => (<TagChip className={styles.chip} key={tag.id} tag={tag} color={color} size={size} />))}
     </section>
   );
 };

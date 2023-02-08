@@ -1,21 +1,11 @@
 import Contentful from 'contentful';
 
-import { Tag } from './tag.types';
-import { ItemContent, ItemSys } from './util.types';
+import { ProjectItem } from './project.types';
 
-export interface JournalEntryPartial {
-  sys: ItemSys;
-  contentfulMetadata: {
-    tags: Tag[];
-  };
-  title: string;
-  slug: string;
-}
-
-export interface JournalEntryFull extends JournalEntryPartial {
-  content: ItemContent;
-  project: {
-    sys: Contentful.Sys;
-    title: string;
-  }
+export interface JournalEntryItem {
+  title: Contentful.EntryFields.Text;
+  slug: Contentful.EntryFields.Text;
+  image: Contentful.Asset;
+  content: Contentful.EntryFields.RichText;
+  project: Contentful.Entry<ProjectItem>;
 }

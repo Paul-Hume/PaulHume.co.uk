@@ -8,7 +8,6 @@ import { TagBlock } from 'Components/TagBlock';
 
 import styles from './JobCard.module.css';
 
-import { useTags } from 'Context/tagsContext';
 import { useMedia } from 'Hooks';
 import { JobHistoryItem } from 'Types';
 import { formatDate } from 'Utils';
@@ -19,7 +18,6 @@ interface JobCardProps {
 }
 
 export const JobCard = ({ job, tags }: JobCardProps) => {
-  const { convertTagLinks } = useTags();
   const largeScreen = useMedia('md');
   const theme = useTheme();
 
@@ -77,7 +75,7 @@ export const JobCard = ({ job, tags }: JobCardProps) => {
 
       <RenderRichText content={job.description} />
 
-      <TagBlock tags={convertTagLinks(tags || [])} size="small" align="right" />
+      <TagBlock tags={tags} size="small" align="right" />
 
     </section>
   );
