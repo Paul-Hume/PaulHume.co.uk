@@ -7,7 +7,7 @@
   gap: var(--gap);
 }
 
-.container.largeScreen {
+.container.medium-screen {
   grid-template-rows: auto minMax(0, 1fr);
 }
 
@@ -23,7 +23,7 @@
   gap: var(--gap);
 }
 
-.content.largeScreen {
+.content.medium-screen {
   grid-template-columns: auto minMax(0, 1fr);
 }
 
@@ -34,13 +34,10 @@
   margin-left: var(--gap);
 }
 
-.page-content.largeScreen {
+.page-content.medium-screen {
   margin-left: 0;
 }
 
 .page-container {
   padding: 0 !important;
-}
-
-.footer {
 }
