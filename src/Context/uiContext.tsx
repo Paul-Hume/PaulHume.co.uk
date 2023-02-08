@@ -43,7 +43,7 @@ const UiProvider = (props: object) => {
         setProfileImage(url);
       }
     });
-  }, []);
+  }, [contentfulClient]);
 
 
   const currentTheme: Theme = useMemo(() => theme === 'dark' ? draculaTheme : lightTheme, [theme]);

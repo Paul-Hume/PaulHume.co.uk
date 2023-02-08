@@ -10,7 +10,6 @@ import { formatDuration } from 'Utils';
 export const ExperiencePreview = () => {
   const { data, isLoading, error } = useExperience({ limit: 5 });
   const mediumScreen = useMedia('md');
-  const largeScreen = useMedia('lg');
 
   return (
     <section>
@@ -33,7 +32,6 @@ export const ExperiencePreview = () => {
                   {item.fields.role} - {item.fields.client}
                   {!mediumScreen && <Typography variant="caption"><br />{formatDuration(item.fields.from, item.fields.to)}</Typography>}
                 </TableCell>
-                {largeScreen && <TableCell className={styles.date}>{formatDuration(item.fields.from, item.fields.to)}</TableCell>}
               </TableRow>
             ))}
           </TableBody>

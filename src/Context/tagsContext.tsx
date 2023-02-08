@@ -145,7 +145,7 @@ const TagsProvider = (props: object) => {
   const value: TagsContext = useMemo(
     () => ({
       loadingTags,
-      tags: orderBy(tags, ['count'], ['desc']),
+      tags: orderBy(tags, ['count', 'name'], ['desc', 'asc']),
       selectedTags,
       updateSelectedTags,
       convertTagLinks,
