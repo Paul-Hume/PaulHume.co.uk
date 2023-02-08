@@ -1,6 +1,6 @@
-import { createContext, useCallback,useContext, useEffect, useMemo, useState } from 'react';
-import { useQueries, useQuery } from '@tanstack/react-query';
-import { createClient, TagLink } from 'contentful';
+import { createContext, useCallback,useContext, useMemo, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { TagLink } from 'contentful';
 import { orderBy } from 'lodash';
 
 import { useContentfulClient } from 'Hooks';
