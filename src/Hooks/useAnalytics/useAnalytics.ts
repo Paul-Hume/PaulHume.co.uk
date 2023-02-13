@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import ReactGA from 'react-ga4';
 
 interface ButtonClickProps {
@@ -6,9 +7,9 @@ interface ButtonClickProps {
 }
 
 export const useAnalytics = () => {
-  const pageView = () => {
-    ReactGA.send({ hitType: 'pageview', page: window.location.pathname + window.location.search });
-  };
+  const pageView = useCallback((page: string) => {
+    ReactGA.send({ hitType: 'pageview', page });
+  }, []);
 
   const buttonClick = ({ button, value }: ButtonClickProps) => {
     ReactGA.event({
@@ -16,7 +17,6 @@ export const useAnalytics = () => {
       action: 'click',
       label: button,
       value: value || 1,
-
     });
   };
 

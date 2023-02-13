@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useOutlet } from 'react-router-dom';
+import { useLocation, useOutlet } from 'react-router-dom';
 
 import { Title } from 'Components';
 import { JournalGrid } from 'Modules';
@@ -11,9 +12,14 @@ export const JournalPage = () => {
   const outlet = useOutlet();
   const { pageTitle } = useUi();
   const { pageView } = useAnalytics();
+  const { pathname } = useLocation();
 
-  pageView();
-
+  useEffect(() => {
+    if (!outlet) {
+      pageView(pathname);
+    }
+  }, [pathname, outlet, pageView]);
+  
   return outlet || (
     <>
       <Helmet>
