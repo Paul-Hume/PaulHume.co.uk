@@ -1,6 +1,9 @@
+import { useEffect } from 'react';
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
-import { BLOCKS } from '@contentful/rich-text-types';
+import { BLOCKS, MARKS } from '@contentful/rich-text-types';
 import Contentful from 'contentful';
+// @ts-ignore
+import Prism from 'prismjs';
 
 import styles from './RenderRichText.module.css';
 
@@ -12,6 +15,10 @@ interface RenderRichTextProps {
 }
 
 export const RenderRichText = ({ content, className }: RenderRichTextProps) => {
+  useEffect(() => {
+    Prism.highlightAll();
+  }, []);
+
   let options = {
     renderNode: {
       [BLOCKS.EMBEDDED_ASSET]: (node: unknown) => {
@@ -22,6 +29,12 @@ export const RenderRichText = ({ content, className }: RenderRichTextProps) => {
 
         return `<img src="${assetUrl}" />`;
       }
+    },
+    renderMark: {
+      [MARKS.CODE]: (text: string) => {
+        return `<pre><code class="language-javascript">${text}</code></pre>`;
+      },
+      [MARKS.UNDERLINE]: (text: string) => `<pre>${text}</pre>`,
     }
   };
 

@@ -11,7 +11,11 @@ export const sanitizeHtml = (html: string): string => {
       'small', 'span', 'strong', 'sub', 'sup', 'time', 'u', 'var', 'wbr', 'caption',
       'col', 'colgroup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'img'
     ],
-  }).replace(/<code>/g, '<pre><code>').replace(/<\/code>/g, '</code></pre>');
+    allowedAttributes: {
+      'code': [ 'class' ],
+      'img': [ 'src', 'alt', 'title', 'width', 'height' ],
+    },
+  });
 
   return updated;
 };

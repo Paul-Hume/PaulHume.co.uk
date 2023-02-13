@@ -5,6 +5,7 @@ import { createBrowserRouter ,RouterProvider } from 'react-router-dom';
 import { ErrorPage, ExperiencePage, JournalItemPage, JournalPage, Root } from 'Routes';
 
 import './index.css';
+import './Themes/dracular-prism.css';
 
 import reportWebVitals from './reportWebVitals';
 import { UiProvider } from 'Context/uiContext';
