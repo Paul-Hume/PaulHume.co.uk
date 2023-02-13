@@ -33,7 +33,7 @@ export const JournalItemPage = () => {
   const journalEntry = data?.items[0];
   
   pageView();
-
+  
   return (
     <>
       <Helmet>
