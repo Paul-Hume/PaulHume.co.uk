@@ -1,18 +1,33 @@
+import { Helmet } from 'react-helmet-async';
+
 import { Grid, SkillsTable } from 'Components';
 import { ExperiencePreview } from 'Modules';
 import { PageContent } from 'Modules/PageContent';
 
 import styles from './HomePage.module.css';
 
-export const HomePage = () => {
-  return (
-    <section>
-      <PageContent className={styles['content-container']} pageTag="pageHome" />
+import { useUi } from 'Context/uiContext';
+import { useAnalytics } from 'Hooks/useAnalytics/useAnalytics';
 
-      <Grid>
-        <SkillsTable />
-        <ExperiencePreview />
-      </Grid>
-    </section>
+export const HomePage = () => {
+  const { pageView } = useAnalytics();
+  const { pageTitle } = useUi();
+
+  pageView();
+
+  return (
+    <>
+      <Helmet>
+        <title>Home {pageTitle}</title>
+      </Helmet>
+      <section>
+        <PageContent className={styles['content-container']} pageTag="pageHome" />
+
+        <Grid>
+          <SkillsTable />
+          <ExperiencePreview />
+        </Grid>
+      </section>
+    </>
   );
 };

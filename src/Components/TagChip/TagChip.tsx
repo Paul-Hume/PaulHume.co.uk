@@ -3,6 +3,7 @@ import { Chip } from '@mui/material';
 import styles from './TagChip.module.css';
 
 import { useTags } from 'Context/tagsContext';
+import { useAnalytics } from 'Hooks/useAnalytics/useAnalytics';
 import { Tag } from 'Types/tag.types';
 
 interface TagChipProps {
@@ -14,6 +15,7 @@ interface TagChipProps {
 
 export const TagChip = ({ tag, size, className, color }: TagChipProps) => {
   const { selectedTags, updateSelectedTags } = useTags();
+  const { buttonClick } = useAnalytics();
 
   return (
     <Chip
@@ -29,6 +31,7 @@ export const TagChip = ({ tag, size, className, color }: TagChipProps) => {
       color={color}
       onClick={(event) => {
         event.stopPropagation();
+        buttonClick({ button: `Tag - ${tag.name}` });
         updateSelectedTags(tag?.id || '');
       }}
     />

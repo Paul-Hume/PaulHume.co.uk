@@ -7,6 +7,7 @@ import { lightTheme } from 'Themes/light';
 import { getCookie, setCookie } from 'Utils';
 
 export interface UiContext {
+  pageTitle: string;
   theme: string;
   currentTheme: Theme;
   toggleTheme: () => void;
@@ -14,6 +15,7 @@ export interface UiContext {
 }
 
 const Ui = createContext<UiContext>({
+  pageTitle: '',
   theme: getCookie('theme') || 'dark',
   currentTheme: draculaTheme,
   toggleTheme: () => {},
@@ -22,6 +24,7 @@ const Ui = createContext<UiContext>({
 const UiProvider = (props: object) => {
   const [theme, setTheme] = useState<string>(getCookie('theme') || 'dark');
   const [profileImage, setProfileImage] = useState<string>('');
+  const pageTitle = '| Paul Hume | Freelance Senior React Developer';
 
   const contentfulClient = createClient({
     space: `${process.env.REACT_APP_SPACE}`,
@@ -50,6 +53,7 @@ const UiProvider = (props: object) => {
 
   const value: UiContext = useMemo(
     () => ({
+      pageTitle,
       theme,
       currentTheme,
       toggleTheme,
