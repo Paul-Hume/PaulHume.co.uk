@@ -27,6 +27,7 @@ export const JournalItemPage = () => {
     }
   }, [journalEntry?.fields?.title, pageView, pathname]);
 
+
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -38,7 +39,7 @@ export const JournalItemPage = () => {
   if (!isLoading && !error && !data?.items?.length) {
     return <NoDataAlert />;
   }
-  
+    
   return (
     <>
       <Helmet>
