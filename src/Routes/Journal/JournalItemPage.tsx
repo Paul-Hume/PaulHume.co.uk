@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
+import { useLocation,useParams  } from 'react-router-dom';
 
 import { ErrorAlert, LoadingSpinner, NoDataAlert, RenderRichText,TagBlock,Title  } from 'Components';
 import { JournalGrid } from 'Modules';
@@ -16,7 +17,15 @@ export const JournalItemPage = () => {
   const { pageTitle } = useUi();
   const { pageView } = useAnalytics();
   const { data, isLoading, error } = useJournalItem({ slug });
+  const { pathname } = useLocation();
 
+  const journalEntry = data?.items[0];
+
+  useEffect(() => {
+    if (journalEntry?.fields?.title) {
+      pageView(pathname);
+    }
+  }, [journalEntry?.fields?.title, pageView, pathname]);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -29,10 +38,6 @@ export const JournalItemPage = () => {
   if (!isLoading && !error && !data?.items?.length) {
     return <NoDataAlert />;
   }
-
-  const journalEntry = data?.items[0];
-  
-  pageView();
   
   return (
     <>

@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 
 import { ErrorAlert,JobCard, LoadingSpinner, NoDataAlert, Title } from 'Components';
 
@@ -10,8 +12,11 @@ export const ExperiencePage = () => {
   const { data, isLoading, error} = useExperience();
   const { pageTitle } = useUi();
   const { pageView } = useAnalytics();
+  const { pathname } = useLocation();
 
-  pageView();
+  useEffect(() => {
+    pageView(pathname);
+  }, [pathname, pageView]);
 
   return (
     <>

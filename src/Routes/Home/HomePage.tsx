@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 
 import { Grid, SkillsTable } from 'Components';
 import { ExperiencePreview } from 'Modules';
@@ -12,8 +14,11 @@ import { useAnalytics } from 'Hooks/useAnalytics/useAnalytics';
 export const HomePage = () => {
   const { pageView } = useAnalytics();
   const { pageTitle } = useUi();
+  const { pathname } = useLocation();
 
-  pageView();
+  useEffect(() => {
+    pageView(pathname);
+  }, [pathname, pageView]);
 
   return (
     <>
