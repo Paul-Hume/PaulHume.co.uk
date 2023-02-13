@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import ReactGA from 'react-ga4';
+import { HelmetProvider } from 'react-helmet-async';
 import { useOutlet } from 'react-router-dom';
 import { Container, CssBaseline,Paper  } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
@@ -18,35 +21,38 @@ export const Root = () => {
   const outlet = useOutlet();
   const { currentTheme } = useUi();
   const mediumScreen = useMedia('md');
-    
+  ReactGA.initialize(process.env.REACT_APP_GA || '');
+
   return (
     <ThemeProvider theme={currentTheme}>
       <CssBaseline enableColorScheme />
-      <QueryClientProvider client={queryClient}>
-        <TagsProvider>
-          <Paper className={`${styles.container} ${mediumScreen ? styles['medium-screen'] : ''}`} elevation={0}>
-            <header className={styles.header}>
-              <Header />
-            </header>
-            <section className={`${styles.content} ${mediumScreen ? styles['medium-screen'] : ''}`}>
-              {mediumScreen && (
-                <aside className={styles.aside}>
-                  <SideBar />
-                </aside>
-              )}
-              <article className={`${styles['page-content']} ${mediumScreen ? styles['medium-screen'] : ''}`}>
-                <Container className={styles['page-container']}>
-                  {outlet || <HomePage />}
-                </Container>
-              </article>
-            </section>
+      <HelmetProvider>
+        <QueryClientProvider client={queryClient}>
+          <TagsProvider>
+            <Paper className={`${styles.container} ${mediumScreen ? styles['medium-screen'] : ''}`} elevation={0}>
+              <header className={styles.header}>
+                <Header />
+              </header>
+              <section className={`${styles.content} ${mediumScreen ? styles['medium-screen'] : ''}`}>
+                {mediumScreen && (
+                  <aside className={styles.aside}>
+                    <SideBar />
+                  </aside>
+                )}
+                <article className={`${styles['page-content']} ${mediumScreen ? styles['medium-screen'] : ''}`}>
+                  <Container className={styles['page-container']}>
+                    {outlet || <HomePage />}
+                  </Container>
+                </article>
+              </section>
             
-            <footer className={styles.footer}>
-              <Footer />
-            </footer>
-          </Paper>
-        </TagsProvider>
-      </QueryClientProvider>
+              <footer className={styles.footer}>
+                <Footer />
+              </footer>
+            </Paper>
+          </TagsProvider>
+        </QueryClientProvider>
+      </HelmetProvider>
     </ThemeProvider>
   );
 };

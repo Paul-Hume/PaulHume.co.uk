@@ -3,6 +3,7 @@ import { LoadingButton } from '@mui/lab';
 import { useQuery } from '@tanstack/react-query';
 
 import { useContentfulClient } from 'Hooks';
+import { useAnalytics } from 'Hooks/useAnalytics/useAnalytics';
 import { formatDate } from 'Utils';
 
 interface CvDownloadButtonProps {
@@ -11,6 +12,7 @@ interface CvDownloadButtonProps {
 
 export const CvDownloadButton = ({ className = '' }: CvDownloadButtonProps) => {
   const { fetchAsset } = useContentfulClient();
+  const { buttonClick } = useAnalytics();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['cv'],
@@ -27,6 +29,7 @@ export const CvDownloadButton = ({ className = '' }: CvDownloadButtonProps) => {
       loading={isLoading} 
       disabled={!!error || isLoading || !data}
       href={data?.fields?.file?.url || ''}
+      onClick={() => { buttonClick({ button: 'CV Download'}); }}
       target="_blank"
     >
       {!data?.fields?.file?.url && !isLoading && 'CV Unavailable'}
