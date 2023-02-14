@@ -14,7 +14,7 @@ export const useAnalytics = () => {
   const buttonClick = ({ button, value }: ButtonClickProps) => {
     ReactGA.event({
       category: 'button',
-      action: 'click',
+      action: button,
       label: button,
       value: value || 1,
     });
