@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter ,RouterProvider } from 'react-router-dom';
 
-import { ErrorPage, ExperiencePage, JournalItemPage, JournalPage, Root } from 'Routes';
+import { ErrorPage, ExperiencePage, JournalItemPage, JournalPage, ProjectsItemPage, ProjectsPage, Root } from 'Routes';
 
 import './index.css';
 import './Themes/dracular-prism.css';
@@ -15,6 +15,9 @@ const router = createBrowserRouter([
     { path: 'experience', element: <ExperiencePage />},
     { path: 'journal', element: <JournalPage />, children: [
       { path: ':slug', element: <JournalItemPage /> }
+    ] },
+    { path: 'projects', element: <ProjectsPage />, children: [
+      { path: ':slug', element: <ProjectsItemPage /> }
     ] },
   ] },
 ]);

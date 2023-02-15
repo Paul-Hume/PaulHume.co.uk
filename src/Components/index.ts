@@ -1,4 +1,5 @@
 export * from './AvailableFrom';
+export * from './Card';
 export * from './CvDownloadButton';
 export * from './ErrorAlert';
 export * from './Grid';
