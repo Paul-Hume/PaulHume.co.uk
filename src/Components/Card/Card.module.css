@@ -1,0 +1,16 @@
+.action-area {
+  height: 100% !important;
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  flex-direction: column !important;
+}
+
+.image {
+  height: 100px;
+  width: 100%;
+}
+
+.description {
+  margin-bottom: 1rem !important;
+}

@@ -7,13 +7,14 @@ import styles from './TagBlock.module.css';
 import { useTags } from 'Context/tagsContext';
 
 interface TagBlockProps {
+  className?: string;
   tags: TagLink[];
   color?: 'primary' | 'secondary' | 'success' | 'error' | 'warning' | 'info' | 'default';
   align?: 'left' | 'center' | 'right';
   size?: 'small' | 'medium';
 }
 
-export const TagBlock = ({ tags, color, align, size }: TagBlockProps) => {
+export const TagBlock = ({ className = '', tags, color, align, size }: TagBlockProps) => {
   const { convertTagLinks } = useTags();
 
   if (tags.length === 0) return null;
@@ -21,7 +22,7 @@ export const TagBlock = ({ tags, color, align, size }: TagBlockProps) => {
   const convertedTags = convertTagLinks(tags) || [];
 
   return (
-    <section className={`${styles.container} ${styles[`align-${align}`]}`}>
+    <section className={`${styles.container} ${styles[`align-${align}`]} ${className}`}>
       {convertedTags.map((tag) => (<TagChip className={styles.chip} key={tag.id} tag={tag} color={color} size={size} />))}
     </section>
   );

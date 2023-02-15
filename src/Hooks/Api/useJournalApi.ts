@@ -8,9 +8,10 @@ import { JournalEntryItem } from 'Types';
 interface UseJournalProps {
   limit?: number;
   journalId?: string;
+  projectId?: string;
 }
 
-export const useJournal = ({ limit, journalId }: UseJournalProps = {}) => {
+export const useJournal = ({ limit, journalId, projectId }: UseJournalProps = {}) => {
   const { fetchEntries } = useContentfulClient();
   const { selectedTags } = useTags();
 
@@ -22,6 +23,7 @@ export const useJournal = ({ limit, journalId }: UseJournalProps = {}) => {
         limit,
         order: '-sys.createdAt',
         'metadata.tags.sys.id[in]': selectedTags.length ? selectedTags.join(',') : undefined,
+        'fields.project.sys.id[match]': projectId ? projectId : undefined,
         'sys.id[ne]': journalId,
       }
     )
