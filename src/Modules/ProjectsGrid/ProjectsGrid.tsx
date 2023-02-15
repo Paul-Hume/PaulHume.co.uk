@@ -24,8 +24,6 @@ export const ProjectsGrid = () => {
     return <NoDataAlert />;
   }
 
-  console.log(data);
-
   return (
     <Grid>
       {data?.items?.map(project => (

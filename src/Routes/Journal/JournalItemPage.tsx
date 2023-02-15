@@ -13,10 +13,10 @@ import { useAnalytics } from 'Hooks/useAnalytics/useAnalytics';
 import { formatDate } from 'Utils';
 
 export const JournalItemPage = () => {
-  const { slug } = useParams();
+  const { slug, journalSlug } = useParams();
   const { pageTitle } = useUi();
   const { pageView } = useAnalytics();
-  const { data, isLoading, error } = useJournalItem({ slug });
+  const { data, isLoading, error } = useJournalItem({ slug: journalSlug || slug });
   const { pathname } = useLocation();
 
   const journalEntry = data?.items[0];
@@ -52,9 +52,13 @@ export const JournalItemPage = () => {
 
         { journalEntry?.fields.content && <RenderRichText className={styles.container} content={journalEntry.fields.content} />}
 
-        <Title title="Latest Entries" type="h4" />
+        {!journalSlug && (
+          <>
+            <Title title="Latest Entries" type="h4" />
 
-        <JournalGrid limit={2} journalId={journalEntry?.sys?.id} />
+            <JournalGrid limit={2} journalId={journalEntry?.sys?.id} />
+          </>
+        )}
       </section>
     </>
   );

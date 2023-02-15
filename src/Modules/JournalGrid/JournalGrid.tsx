@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation,useNavigate  } from 'react-router-dom';
 import { Card, CardActionArea, CardContent, CardHeader } from '@mui/material';
 
 import { ErrorAlert, Grid, LoadingSpinner, NoDataAlert, TagBlock } from 'Components';
@@ -9,15 +9,17 @@ import { formatDate } from 'Utils';
 interface JournalGridProps {
   limit?: number;
   journalId?: string;
+  projectId?: string;
 }
 
-export const JournalGrid = ({ limit, journalId }: JournalGridProps) => {
+export const JournalGrid = ({ limit, journalId, projectId }: JournalGridProps) => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
-  const { data, isLoading, error } = useJournal({ limit, journalId });
+  const { data, isLoading, error } = useJournal({ limit, journalId, projectId });
 
   const navigateJournalItem = (slug: string) => {
-    navigate(`/journal/${slug}`);
+    navigate(`${projectId ? pathname : '/journal'}/${slug}`);
   };
 
   if (isLoading) {

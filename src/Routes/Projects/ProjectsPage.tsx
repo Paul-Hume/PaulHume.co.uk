@@ -20,7 +20,7 @@ export const ProjectsPage = () => {
     }
   });
 
-  return (
+  return outlet || (
     <>
       <Helmet>
         <title>Projects {pageTitle}</title>
