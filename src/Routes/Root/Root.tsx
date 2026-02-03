@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import ReactGA from 'react-ga4';
 import { HelmetProvider } from 'react-helmet-async';
 import { useOutlet } from 'react-router-dom';
