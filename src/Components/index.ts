@@ -3,6 +3,7 @@ export * from './Card';
 export * from './CvDownloadButton';
 export * from './ErrorAlert';
 export * from './Grid';
+export * from './Icon';
 export * from './JobCard';
 export * from './Link';
 export * from './LoadingSpinner';

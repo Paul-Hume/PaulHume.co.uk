@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
-import { NavLink, ThemeToggleSwitch } from 'Components';
+import { Icon, NavLink, ThemeToggleSwitch } from 'Components';
 import { SocialLinks } from 'Modules/SocialLinks';
 import { TagDrawer } from 'Modules/TagDrawer';
 
@@ -14,6 +14,7 @@ import styles from './NavBar.module.css';
 
 import { useUi } from 'Context/uiContext';
 import { useMedia } from 'Hooks';
+import { useNavApi } from 'Hooks/Api/useNavApi';
 
 interface NavBarProps {
   location?: 'header' | 'footer';
@@ -23,10 +24,15 @@ export const NavBar = ({ location = 'header' }: NavBarProps) => {
   const { profileImage } = useUi();
   const largeScreen = useMedia('md');
   const [open, setOpen] = useState(false);
+  const { data, isLoading} = useNavApi();
 
   const toggleDrawer = (open: boolean) => {
     setOpen(open);
   };
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -46,10 +52,11 @@ export const NavBar = ({ location = 'header' }: NavBarProps) => {
           )}
           {((largeScreen && location === 'header') || (!largeScreen && location === 'footer')) && (
             <>
-              <NavLink to="/" icon={<Home />}>Home</NavLink>
-              <NavLink to="/experience" icon={<DeveloperMode />}>Experience</NavLink>
-              <NavLink to="/journal" icon={<Description />}>Journal</NavLink>
-              <NavLink to="/projects" icon={<SettingsEthernet />}>Projects</NavLink>
+              {data?.items.map((item) => (
+                <NavLink key={item.sys.id} icon={item.fields.icon ? <Icon name={item.fields.icon} /> : undefined} to={item.fields.url} >
+                  {item.fields.title}
+                </NavLink>
+              ))}
             </>
           )}
 
