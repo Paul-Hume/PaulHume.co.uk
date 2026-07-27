@@ -1,10 +1,10 @@
-import { Table, TableBody, TableCell,TableRow } from '@mui/material';
+import { Table, TableBody, TableCell, TableRow } from "@mui/material";
 
-import { ErrorAlert, LoadingSpinner, NoDataAlert, Title } from 'Components';
+import { ErrorAlert, LoadingSpinner, NoDataAlert, Title } from "Components";
 
-import styles from './ExperiencePreview.module.css';
+import styles from "./ExperiencePreview.module.css";
 
-import { useExperience } from 'Hooks';
+import { useExperience } from "Hooks";
 
 export const ExperiencePreview = () => {
   const { data, isLoading, error } = useExperience({ limit: 5 });
@@ -17,17 +17,16 @@ export const ExperiencePreview = () => {
 
       {!!error && <ErrorAlert error="Error retrieving experience list" />}
 
-      {!isLoading && !error && !data?.items?.length && (
-        <NoDataAlert />
-      )}
+      {!isLoading && !error && !data?.items?.length && <NoDataAlert />}
 
       {!isLoading && !error && (
         <Table>
           <TableBody>
-            {data?.items?.map(item => (
+            {data?.items?.map((item) => (
               <TableRow key={item.sys.id}>
                 <TableCell>
-                  {item.fields.role} - {item.fields.client}
+                  {item.fields.role} - {item.fields.client}{" "}
+                  {item.fields.project ? `(${item.fields.project})` : ""}
                 </TableCell>
               </TableRow>
             ))}
